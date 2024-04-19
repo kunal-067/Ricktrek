@@ -224,7 +224,7 @@ function Withdrawls() {
 }
 
 
-function DataTable({ withdrawls = data }) {
+function DataTable({ withdrawls }) {
     const { toast } = useToast();
     const [user, setUser] = useState({});
 
