@@ -7,9 +7,9 @@ import {
 import {
     verifyToken
 } from './utils/api/jwt.utils';
-import {
-    User
-} from './lib/models/user';
+// import {
+//     User
+// } from './lib/models/user';
 
 export async function middleware(req) {
     try {
@@ -66,31 +66,31 @@ const decodeToken = (req) => {
     }
 }
 
-const checkAdmin = async (data) => {
-    await connectDb();
-    try {
-        const {
-            userId
-        } = data;
+// const checkAdmin = async (data) => {
+//     await connectDb();
+//     try {
+//         const {
+//             userId
+//         } = data;
 
-        const user = await User.findById(userId);
-        if (!user) {
-            return NextResponse.json({
-                msg: 'invalid attempt ! you are not allowed to do this'
-            }, {
-                status: 400
-            })
-        }
+//         const user = await User.findById(userId);
+//         if (!user) {
+//             return NextResponse.json({
+//                 msg: 'invalid attempt ! you are not allowed to do this'
+//             }, {
+//                 status: 400
+//             })
+//         }
 
-        return true;
-    } catch (error) {
-        // console.log(error)
-        throw new Error({
-            message: 'error in checking admin in middleware',
-            error
-        })
-    }
-}
+//         return true;
+//     } catch (error) {
+//         // console.log(error)
+//         throw new Error({
+//             message: 'error in checking admin in middleware',
+//             error
+//         })
+//     }
+// }
 
 export const config = {
     matcher: '/:path*',
