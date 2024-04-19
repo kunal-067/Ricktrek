@@ -1,0 +1,99 @@
+'use client'
+import Loader from '@/components/common/Loader';
+import { Button } from '@/components/ui/button'
+import { toast } from '@/components/ui/use-toast';
+import { formattedDateTime } from '@/utils/time';
+import axios from 'axios';
+import { ArrowDownCircleIcon, CircleArrowLeft, RefreshCw } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+
+function Withdrawls() {
+    const [withdrawals, setWithdrawls] = useState('');
+    const [upi, setUpi] = useState('');
+    const [amount, setAmount] = useState('');
+    const [resetClicked, setResetClicked] = useState(false);
+
+    const [withdrawing, setWithdrawing] = useState(false)
+
+    const reset = () => {
+        setResetClicked(true);
+        setUpi('');
+        setAmount('');
+        setTimeout(() => setResetClicked(false), 1000);
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setWithdrawing(true);
+        axios.post('/api/withdraw', { upi, amount }).then(res => {
+            toast({
+                title: res.data.msg
+            })
+            setWithdrawing(false);
+        }).catch(err => {
+            toast({
+                title: err.response?.data.msg || err.message
+            })
+            setWithdrawing(false);
+        })
+    }
+
+    useEffect(() => {
+        axios.get('/api/withdraw').then(res => {
+            setWithdrawls(res.data.withdrawals)
+        }).catch(err => console.error(err))
+    })
+
+    return (
+        <div className='mx-4'>
+            <div className='py-[1rem] bg-[#fff] -mt-10 pl-4 rounded-sm shadow-md'>
+                Withdrawls
+            </div>
+
+            <main>
+                <section className='bg-[#fff] shadow-sm rounded-md p-4 mt-4'>
+                    <h2>Withdraw</h2>
+                    <form onSubmit={handleSubmit} >
+                        <div className='flex justify-between flex-wrap'>
+                            <input value={upi} onChange={e => setUpi(e.target.value)} className='flex-1 border rounded-md p-1 pl-3 m-1' type='text' name='upi' placeholder='Enter upi id' />
+                            <input value={amount} onChange={e => setAmount(e.target.value)} className='flex-1 border rounded-md pl-3 p-1 m-1' type='number' name='amount' placeholder='Enter amount' />
+                        </div>
+                        <div className='flex justify-end p-1'>
+                            <Button type='button' onClick={reset} className='mr-2 bg-blue-700'><RefreshCw className={`size-5 mr-2 ${resetClicked ? 'rotate-[360deg]' : ''} transition-transform duration-700`} /> Reset</Button>
+                            <Button type='submit' disabled={withdrawing} className='bg-green-700'>
+                                {withdrawing ? <Loader size='small' /> : <ArrowDownCircleIcon className='size-5 mr-2' />}
+                                {withdrawing ? 'Withdrawing' : 'Withdraw'}
+                            </Button>
+                        </div>
+                    </form>
+                </section>
+
+                <section className='py-4'>
+                    <h2 className='font-medium text-lg'>Withdrawl History</h2>
+                    <div className="flex flex-wrap justify-around ">
+                        {
+                           withdrawals && withdrawals.map(withdrawal => {
+                                const {_id, amount, status, createdAt} = withdrawal;
+                                return (
+                                    <WithdrawlCard key={_id} amount={amount} status={status} date={createdAt} />
+                                )
+                            })
+                        }
+
+                    </div>
+                </section>
+            </main>
+        </div>
+    )
+}
+
+const WithdrawlCard = ({ amount, status, date }) => {
+    return (
+        <div className='bg-white shadow-xl h-[100px] w-[140px] sm:h-[120px] sm:w-[200px] m-1 rounded-xl flex flex-col justify-center items-center'>
+            <h1 className=' font-bold text-[21px]'>{'₹'+amount}</h1>
+            <p className=' text-orange-500 -mt-1'>{status}</p>
+            <p className='text-sm font-mono  text-green-700 mt-2 font-medium'>{formattedDateTime(date).date}</p>
+        </div>
+    )
+}
+
+export default Withdrawls
