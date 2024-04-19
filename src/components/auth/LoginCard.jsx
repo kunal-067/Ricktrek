@@ -42,6 +42,7 @@ function LoginCard() {
                 title:res.data.msg
             })
             setDisableSubmit(false);
+            window.location.href = '/dashboard';
         }).catch(err=>{
             console.error(err);
             toast({
