@@ -1,7 +1,7 @@
-const bcrypt = require('bcrypt')
+import bcrypt from 'bcrypt';
 const salt_round = process.env.SALT_ROUND || 10;
 
-const hashPassword = async (password) => {
+export const hashPassword = async (password) => {
     try {
         const salt = await bcrypt.genSalt(salt_round);
         const hashedPassword = await bcrypt.hash(password, salt)
@@ -11,7 +11,7 @@ const hashPassword = async (password) => {
     }
 }
 
-const matchPassword = async (password, hashedPassword) => {
+export const matchPassword = async (password, hashedPassword) => {
     try {
         const match = await bcrypt.compare(password, hashedPassword)
         if (match) {
@@ -24,4 +24,4 @@ const matchPassword = async (password, hashedPassword) => {
     }
 }
 
-module.exports = {hashPassword, matchPassword}
+// module.exports = {hashPassword, matchPassword}
