@@ -10,7 +10,6 @@ import {
 import {
     User
 } from './lib/models/user';
-import { connectDb } from './utils/api/dbconnect';
 
 export async function middleware(req) {
     try {
