@@ -44,7 +44,7 @@ function Withdrawls() {
     const [loading, setLoading] = useState(true);
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(20);
-    const [withdrawls, setWithdrawls] = useState(data);
+    const [withdrawls, setWithdrawls] = useState([]);
 
     const [withdrawlsToDisplay, setWithdrawlsToDisplay] = useState([]);
     const [pages, setPages] = useState(1);
