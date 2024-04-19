@@ -35,6 +35,7 @@ function SignUpCard() {
             toast({
                 title: res.data.msg
             })
+            window.location.href = '/dashboard';
         }).catch(err => {
             console.error(err);
             setDisableSubmit(false);
