@@ -8,17 +8,19 @@ import FetchUser from '@/components/main/fetchdata/FetchUser'
 
 
 function Laybout({ children }) {
-  const user = JSON.parse(localStorage.getItem('user'));
-  if(!user){
-    return window.location.href = '/home'
-  }
-  
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      return window.location.href = '/home'
+    }
+  }, [])
+
   return (
     <>
       <NavBar />
       <main>
         <UserContextProvider>
-          <FetchUser/>
+          <FetchUser />
           {children}
         </UserContextProvider>
       </main>
