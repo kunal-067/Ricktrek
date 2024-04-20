@@ -46,11 +46,12 @@ const navLinks = [
 
 function NavBar() {
     const {history} = useContext(UserContext);
+    const router = useRouter();
     return (
         <nav className='h-24 bg-blue-400 '>
             <div className='flex py-4 px-4 w-full justify-between'>
                 <SmNav /> 
-                { history?.find(his=>his.status=='unSeen') ? <BellDot/> : <Bell/> }
+                <div onClick={()=>router.push('/history')}>{ history?.find(his=>his.status=='unSeen') ? <BellDot/> : <Bell/> }</div>
             </div>
         </nav>
     )
@@ -72,7 +73,7 @@ function SmNav() {
             <SheetTrigger><AlignJustify /></SheetTrigger>
             <SheetContent side='left' className='px-1'>
                 <SheetHeader>
-                    <SheetTitle>Are you absolutely sure?</SheetTitle>
+                    <SheetTitle>Navigations</SheetTitle>
                     <SheetDescription className='list-none flex flex-col w-full'>
                         {
                             navLinks.map(link => (
