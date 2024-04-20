@@ -103,6 +103,8 @@ function Referrals() {
     const treeOrientation = 'vertical';
     const nodeSize = { x: 100, y: 200 };
     const [tree, setTree] = useState({});
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
 
     const { referrals, user } = useContext(UserContext);
 
@@ -142,8 +144,8 @@ function Referrals() {
     }, [referrals, user])
 
     useEffect(()=>{
-        const x = window.innerWidth/2;
-        const y = window.innerWidth/16;
+        setX(window.innerWidth/2);
+        setY(window.innerWidth/16);
     },[])
 
     // if (!referrals) {
