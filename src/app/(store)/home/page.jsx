@@ -26,11 +26,15 @@ const words = [
 ]
 function Home() {
     const router = useRouter();
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-        return window.location.href = '/dashboard'
-    }
-    
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                return window.location.href = '/dashboard'
+            }
+        }
+    })
+
     return (
         <div className='flex flex-col justify-center items-center bg-white shadow-md h-[100vh]'>
             <div className=''>
