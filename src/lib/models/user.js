@@ -67,6 +67,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    balance2:{
+        type:Number,
+        default:0
+    },
     rightCv: {
         type: Number,
         default: 0

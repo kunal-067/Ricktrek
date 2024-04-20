@@ -8,6 +8,10 @@ import FetchUser from '@/components/main/fetchdata/FetchUser'
 
 
 function Laybout({ children }) {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if(!user){
+    return window.location.href = '/home'
+  }
   
   return (
     <>

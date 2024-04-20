@@ -22,14 +22,15 @@ import {
 } from "@/components/ui/alert-dialog"
 import { toast } from '@/components/ui/use-toast'
 import { UserContext } from '@/app/context/Context'
+import axios from 'axios'
 
 
 
 function Coupons() {
-    const {coupons} = useContext(UserContext);
-    
-    if(!coupons){
-        return(
+    const { coupons } = useContext(UserContext);
+
+    if (!coupons) {
+        return (
             <>Loading...</>
         )
     }
@@ -40,9 +41,9 @@ function Coupons() {
             </div>
             <div className='mt-3 mx-1 flex flex-wrap mb-`'>
                 {
-                    coupons.map(coupon=>{
-                        return(
-                            <CouponCard key={coupon._id}/>
+                    coupons.map(coupon => {
+                        return (
+                            <CouponCard key={coupon._id} couponId={coupon._id} amount={coupon.amount} />
                         )
                     })
                 }
@@ -51,11 +52,18 @@ function Coupons() {
     )
 }
 
-function CouponCard() {
+function CouponCard({ amount, couponId }) {
     const handleSubmit = (e) => {
         e.preventDefault()
-        toast({
-            title: 'comming soon ...'
+        axios.post('/api/coupons/use', { couponId }).then(res => {
+            toast({
+                title: res.data.msg
+            })
+        }).catch(err => {
+            console.error(err);
+            toast({
+                title: err.response?.data.msg || err.message
+            })
         })
     }
     return (
@@ -65,7 +73,7 @@ function CouponCard() {
             </div>
             <div className='w-full'>
                 <b>Coupon</b>
-                <p>₹1200</p>
+                <p>₹{amount}</p>
                 <div className='flex items-center justify-end w-full'>
 
                     <Dialog>

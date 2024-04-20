@@ -26,12 +26,16 @@ const navLinks = [
         src: '/referrals'
     },
     {
-        name: 'Coupons',
+        name: 'Coupon Store',
         src: '/coupons'
     },
     {
-        name:'Withdrawls',
-        src:'/withdrawls'
+        name:'My Coupons',
+        src:'/my-coupons'
+    },
+    {
+        name:'Wallet',
+        src:'/wallet'
     },
     {
         name: 'Profile',

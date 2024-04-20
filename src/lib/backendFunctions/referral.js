@@ -57,13 +57,13 @@ export async function getTreeNodes(node) {
     
 
     if (node.leftChild) {
-        const leftNode = await User.findById(node.leftChild, {_id:1, name:1, rightChild:1, leftChild:1}).exec();
+        const leftNode = await User.findById(node.leftChild, {_id:1, name:1, phone:1, rightChild:1, leftChild:1}).exec();
         const leftNodes = await getTreeNodes(leftNode);
         nodes.push(...leftNodes);
     }
     
     if (node.rightChild) {
-        const rightNode = await User.findById(node.rightChild, {_id:1, name:1, rightChild:1, leftChild:1}).exec();
+        const rightNode = await User.findById(node.rightChild, {_id:1, name:1, phone:1, rightChild:1, leftChild:1}).exec();
         const rightNodes = await getTreeNodes(rightNode);
         nodes.push(...rightNodes);
     }

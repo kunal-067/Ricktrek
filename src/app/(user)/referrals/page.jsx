@@ -83,16 +83,16 @@ const renderCustomNode = ({ nodeDatum, toggleNode, foreignObjectProps }) => {
 
     return (
         <g>
-            <foreignObject x={-25} y={-25} className={`size-14 ${nodeDatum.children && 'h-[4.3rem]'}`} onClick={handleClick}>
-                <div style={{ textAlign: 'center' }} className='flex flex-col justify-center items-center'>
-                    <Avatar className={`size-14 border-4 ${nodeDatum.children ? 'border-green-500' : 'border-red-500'}`}>
+            <foreignObject x={-47} y={-30} 
+            className={` ${nodeDatum.children?.length > 0 ? 'bg-green-200' : 'bg-red-200'} flex justify-center items-center h-[3.2rem] w-24 shadow-lg shadow-green rounded-md`} onClick={handleClick}>
+
+                {/* <Avatar className={`size-10 border-4 ${nodeDatum.children ? 'border-green-500' : 'border-red-500'}`}>
                         <AvatarImage src="https://github.com/shadcn.png" />
                         <AvatarFallback className={`${nodeDatum.children ? 'bg-green-500' : 'bg-red-500'} text-white`}>CN</AvatarFallback>
-                    </Avatar>
-
-                    {/* <div id={nodeDatum.__rd3t.id+1} className='size-5 flex justify-center'>
-                        <ArrowDown />
-                    </div> */}
+                    </Avatar> */}
+                <div className='flex flex-col justify-center items-center size-full text-sm font-medium'>
+                    <p>{nodeDatum.name}</p>
+                    <p className='text-gray-500'>{nodeDatum.phone}</p>
                 </div>
             </foreignObject>
         </g>
@@ -115,17 +115,18 @@ function Referrals() {
         // Initialize an object with the current node's name
         const data = {
             name: root.name,
+            phone: root.phone,
             children: []
         };
 
         // Recursively convert the left and right children, if they exist
         if (root.leftChild) {
             // console.log(referrals)
-            const node = referrals.find(elem=>elem._id == root.leftChild)
+            const node = referrals.find(elem => elem._id == root.leftChild)
             data.children.push(readyTreeData(node));
         }
         if (root.rightChild) {
-            const node = referrals.find(elem=>elem._id == root.rightChild)
+            const node = referrals.find(elem => elem._id == root.rightChild)
             data.children.push(readyTreeData(node));
         }
 
@@ -140,11 +141,11 @@ function Referrals() {
         }
     }, [referrals, user])
 
-    if (!referrals) {
-        return (
-            <>Loading...</>
-        )
-    }
+    // if (!referrals) {
+    //     return (
+    //         <>Loading...</>
+    //     )
+    // }
 
     return (
         <div className='mx-4'>

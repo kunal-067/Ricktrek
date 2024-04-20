@@ -7,7 +7,7 @@ import RecentReferralCard from '@/components/main/RecentReferralCard'
 import { useContext, useEffect } from 'react'
 
 function Dashboard() {
-  const {user} = useContext(UserContext);
+  const {user, referrals, directRefs} = useContext(UserContext);
   
   if(!user){
     return <>Loading...</>
@@ -21,8 +21,8 @@ function Dashboard() {
       <div>
         <section className='mt-3 flex flex-wrap'>
           <Card title={'Earnings'} value={user?.earnings || 0} />
-          <Card title={'Referrals'} value={20} />
-          <Card title={'Position'} value={user?.position} />
+          <Card title={'Total Team'} value={referrals?.length || 0} />
+          <Card title={'Referrals'} value={directRefs?.length || 0} />
         </section>
 
         <section className='flex flex-wrap w-full'>

@@ -11,9 +11,8 @@ export async function GET(req){
     try{
         const header = headers();
         const userId = header.get('userId');
-
+        
         const user = await User.findById(userId, {_id:1, name:1, leftChild:1, rightChild:1});
-
         if(!user){
             return NextResponse.json({msg:'invalid user, may be server error so try later'},{status:404})
         }

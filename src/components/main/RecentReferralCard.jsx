@@ -16,7 +16,7 @@ function RecentReferralCard({ className }) {
             {
                 directRefs.length > 0 ? (directRefs.map(ref=>{
                     return(
-                        <RefCard key={ref._id} name={ref.name} email={ref.phone}/>
+                        <RefCard key={ref._id} status={ref.status} name={ref.name} email={ref.phone}/>
                     )
                 })) : (
                     <div className="flex justify-center items-center size-full">
@@ -28,7 +28,7 @@ function RecentReferralCard({ className }) {
     )
 }
 
-function RefCard({name, email, status='InActive'}) {
+function RefCard({name, email, status}) {
     return (
         <div className="flex mb-1 bg-slate-200 p-2 rounded-sm">
             <Avatar className='size-12'>

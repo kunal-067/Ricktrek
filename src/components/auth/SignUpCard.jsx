@@ -35,6 +35,7 @@ function SignUpCard() {
             toast({
                 title: res.data.msg
             })
+            localStorage.setItem('user', JSON.stringify({loogedIn:true}));
             window.location.href = '/dashboard';
         }).catch(err => {
             console.error(err);
