@@ -141,6 +141,11 @@ function Referrals() {
         }
     }, [referrals, user])
 
+    useEffect(()=>{
+        const x = window.innerWidth/2;
+        const y = window.innerWidth/16;
+    },[])
+
     // if (!referrals) {
     //     return (
     //         <>Loading...</>
@@ -159,7 +164,7 @@ function Referrals() {
                         data={tree}
                         orientation={treeOrientation}
                         renderCustomNodeElement={renderCustomNode}
-                        translate={{ x: window.innerWidth / 2, y: window.innerHeight / 16 }} // Center the tree
+                        translate={{ x: x || 0, y: y || 0 }} // Center the tree
                         nodeSize={nodeSize}
                     />
                 </div>
