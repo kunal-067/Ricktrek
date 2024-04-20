@@ -52,10 +52,12 @@ export const couponClosing = async () => {
         users.forEach(async user => {
 
             if (user.leftsCoupon.find(coupon => coupon.amount == 1000) && user.rightsCoupon.find(coupon => coupon.amount == 1000)) {
+                user.balance += 300;
                 user.earnings += 300;
             }
 
             if (user.leftsCoupon.find(coupon => coupon.amount == 300) && user.rightsCoupon.find(coupon => coupon.amount == 300)) {
+                user.balance += 100;
                 user.earnings += 100;
             }
 

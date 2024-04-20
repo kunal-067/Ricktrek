@@ -61,7 +61,7 @@ function Withdrawls() {
                     <WalletCard name={'Balance'} balance={user?.balance} description={'This amount can be withdrawed directly through upi'}/>
                     <WalletCard name={'Earnings'} balance={user?.earnings} description={'Your total earning till now on omitrek'}/>
                 </section>
-                <section className='bg-[#fff] shadow-sm rounded-md p-4 mt-4 text-[1.2em]'>
+                <section className='bg-[#fff] shadow-sm rounded-md p-4 mt-4'>
                     <h2>Withdraw</h2>
                     <form onSubmit={handleSubmit} >
                         <div className='flex justify-between flex-wrap'>
@@ -111,11 +111,11 @@ const WithdrawlCard = ({ amount, status, date }) => {
 const WalletCard = ({ balance, name, description }) => {
     return (
         <div className=' shadow-xl border-[2px] rounded-2xl p-2 px-5 flex-1 m-1'>
-            <b className='text-[19px] font-medium'>{name}</b>
-            <h2 className='text-[23px] font-bold'>₹{balance}
+            <b className='text-[16px] font-medium'>{name}</b>
+            <h2 className='text-[18px] font-bold'>₹{balance}
                 <Dialog>
                     <DialogTrigger className='float-right'>
-                        <span className='underline text-[17px] text-blue-700 float-right font-medium'>Info</span>
+                        <span className='underline text-[14px] text-blue-700 float-right font-medium'>Info</span>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogDescription className='text-[21px]'>

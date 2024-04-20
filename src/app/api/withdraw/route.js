@@ -42,8 +42,16 @@ export async function POST(req){
             user:userId,
             amount,
             upi
-        })
-        await withdraw.save()
+        });
+        if(amount > user.balance){
+            return NextResponse.json({msg:'Insufficient ammount'}, {status:400})
+        }
+        user.balance -= amount;
+        if(user.balance < 0){
+            return NextResponse.json({msg:'Insufficient ammount'}, {status:400})
+        }
+        await user.save();
+        await withdraw.save();
 
         return NextResponse.json({msg:'withdrawl request summitted.'})
     } catch (error) {
