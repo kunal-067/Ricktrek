@@ -1,12 +1,19 @@
-import { couponClosing, matchingIncome } from "@/lib/backendFunctions/income";
+import {
+    couponClosing,
+    matchingIncome
+} from "@/lib/backendFunctions/income";
 import {
     Coupon
 } from "@/lib/models/coupon";
 import {
     User
 } from "@/lib/models/user";
-import { connectDb } from "@/utils/api/dbconnect";
-import { headers } from "next/headers";
+import {
+    connectDb
+} from "@/utils/api/dbconnect";
+import {
+    headers
+} from "next/headers";
 import {
     NextResponse
 } from "next/server";
@@ -21,7 +28,9 @@ export async function GET(req) {
         if (!user) {
             return NextResponse.json({
                 msg: 'Invalid user ! might be server error.'
-            },{status:404})
+            }, {
+                status: 404
+            })
         }
 
         let coupons;
@@ -37,13 +46,15 @@ export async function GET(req) {
             msg: 'successfull',
             coupons
         })
-        
+
     } catch (error) {
         console.error('error in coupon api', error.message);
         return NextResponse.json({
             msg: 'Internal server error',
             error: error.message
-        },{status:500})
+        }, {
+            status: 500
+        })
     }
 }
 
@@ -61,7 +72,9 @@ export async function POST(req) {
         if (amount < 0 || quantity <= 0) {
             return NextResponse.json({
                 msg: 'invalid amount or quantity'
-            }, {status:400})
+            }, {
+                status: 400
+            })
         }
 
         const coupon = new Coupon({
@@ -81,7 +94,9 @@ export async function POST(req) {
         return NextResponse.json({
             msg: 'Internal server error',
             error: error.message
-        }, {status:500})
+        }, {
+            status: 500
+        })
     }
 }
 
@@ -95,7 +110,9 @@ export async function PUT(req) {
         if (!user || user.role != 'admin') {
             return NextResponse.json({
                 msg: 'You are not allowed to do this action.'
-            }, {status:401})
+            }, {
+                status: 401
+            })
         }
 
         const {
@@ -106,7 +123,9 @@ export async function PUT(req) {
             const coupon = Coupon.findByIdAndDelete(couponId);
             if (!coupon) NextResponse.json({
                 msg: 'Invalid coupon !'
-            }, {status:404})
+            }, {
+                status: 404
+            })
 
             return NextResponse.json({
                 msg: 'coupon removed successfully'
@@ -116,10 +135,16 @@ export async function PUT(req) {
         const coupon = await Coupon.findById(couponId);
         if (!coupon) NextResponse.json({
             msg: 'Invalid coupon !'
-        }, {status:404})
-        if (coupon.status != 'pending') NextResponse.json({
-            msg: 'coupon has already been approved'
-        },{status:401});
+        }, {
+            status: 404
+        })
+        if (coupon.status != 'pending') {
+            return NextResponse.json({
+                msg: 'coupon has already been approved'
+            }, {
+                status: 401
+            });
+        }
 
         coupon.status = status;
         await matchingIncome(coupon.user, coupon.quantity, coupon.amount, coupon._id);
@@ -137,29 +162,39 @@ export async function PUT(req) {
         return NextResponse.json({
             msg: 'Internal server error',
             error: error.message
-        },{status:500})
+        }, {
+            status: 500
+        })
     }
 }
 
 //close coupon
-export async function PATCH(req){
+export async function PATCH(req) {
     try {
         const header = headers();
         const userId = header.get('userId');
 
         const user = await User.findById(userId);
-        if(!user || !user.role == 'admin'){
-            return NextResponse.json({msg:'You are not allowed to do this! stay in limit'},{status:401})
+        if (!user || !user.role == 'admin') {
+            return NextResponse.json({
+                msg: 'You are not allowed to do this! stay in limit'
+            }, {
+                status: 401
+            })
         }
 
         await couponClosing();
 
-        return NextResponse.json({msg:'coupons income updated successfully'});
+        return NextResponse.json({
+            msg: 'coupons income updated successfully'
+        });
     } catch (error) {
         console.error('error in coupon api', error.message);
         return NextResponse.json({
             msg: 'Internal server error',
             error: error.message
-        },{status:500})
+        }, {
+            status: 500
+        })
     }
 }

@@ -17,6 +17,11 @@ const couponSchema = new mongoose.Schema({
         default:'pending'
     },
 
+    royalcount:{
+        type:Number,
+        default:0
+    },
+
     createdAt:{
         type:Date,
         default:Date.now()

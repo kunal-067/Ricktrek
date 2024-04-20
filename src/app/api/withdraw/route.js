@@ -13,7 +13,7 @@ export async function GET(req){
         const userId = header.get('userId');
 
         const user = await User.findById(userId);
-        if(!user) NextResponse.json({msg:'invalid user !'}, {status:404});
+        if(!user){ return NextResponse.json({msg:'invalid user !'}, {status:404}); }
 
         let withdrawls;
         if(user.role == 'admin'){
@@ -36,7 +36,7 @@ export async function POST(req){
 
         const {upi, amount} = await req.json();
         const user = await User.findById(userId);
-        if(!user) NextResponse.json({msg:'Invalid user !'}, {status:404})
+        if(!user){ return NextResponse.json({msg:'Invalid user !'}, {status:404}) }
 
         const withdraw = new Withdraw({
             user:userId,
@@ -68,9 +68,14 @@ export async function PUT(req){
 
         const {withdrawlId, status} = await req.json();
         const user = await User.findById(userId);
-        if(!user || user.role != 'admin') NextResponse.json({msg:'you are not allowed to do this.'}, {status:400})
+        if(!user || user.role != 'admin') {
+            return NextResponse.json({msg:'you are not allowed to do this.'}, {status:400})
+        }
 
         const withdrawl = await Withdraw.findById(withdrawlId);
+        if(withdrawl.status != 'pending'){
+            return NextResponse.json({msg:'Already Approved !'}, {status:400})
+        }
         withdrawl.status = status;
         await withdrawl.save();
         

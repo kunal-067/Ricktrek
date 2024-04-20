@@ -67,9 +67,9 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    balance2:{
-        type:Number,
-        default:0
+    balance2: {
+        type: Number,
+        default: 0
     },
     rightCv: {
         type: Number,
@@ -87,10 +87,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    status:{
-        type:String,
-        enum:['Active', 'InActive'],
-        default:'InActive'
+    status: {
+        type: String,
+        enum: ['Active', 'InActive'],
+        default: 'InActive'
     },
 
     role: {
@@ -101,7 +101,21 @@ const userSchema = new mongoose.Schema({
     registeredAt: {
         type: Date,
         default: Date.now()
-    }
+    },
+
+    hostory: [{
+        msg: String,
+        type: String,
+        status:{
+            type:String,
+            enum:['seen','unSeen'],
+            default:'unSeen'
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now()
+        }
+    }]
 })
 
 export const User = mongoose.models?.User || mongoose.model('User', userSchema)

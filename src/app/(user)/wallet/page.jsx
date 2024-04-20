@@ -11,7 +11,7 @@ import { ArrowDownCircleIcon, CircleArrowLeft, RefreshCw } from 'lucide-react'
 import React, { useContext, useEffect, useState } from 'react'
 
 function Withdrawls() {
-    const {withdrawals, user} = useContext(UserContext)
+    const {withdrawls, user} = useContext(UserContext);
     const [upi, setUpi] = useState('');
     const [amount, setAmount] = useState('');
     const [resetClicked, setResetClicked] = useState(false);
@@ -83,8 +83,8 @@ function Withdrawls() {
                     <h2 className='font-medium text-lg'>Withdrawl History</h2>
                     <div className="flex flex-wrap justify-around ">
                         {
-                            withdrawals && withdrawals.map(withdrawal => {
-                                const { _id, amount, status, createdAt } = withdrawal;
+                            withdrawls && withdrawls.map(withdrawl => {
+                                const { _id, amount, status, createdAt } = withdrawl;
                                 return (
                                     <WithdrawlCard key={_id} amount={amount} status={status} date={createdAt} />
                                 )

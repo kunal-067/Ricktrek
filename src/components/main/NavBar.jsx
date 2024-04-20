@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     Sheet,
     SheetContent,
@@ -8,8 +8,9 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import { AlignJustify } from 'lucide-react';
+import { AlignJustify, Bell, BellDot } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { UserContext } from '@/app/context/Context';
 
 
 const navLinks = [
@@ -44,10 +45,12 @@ const navLinks = [
 ]
 
 function NavBar() {
+    const {history} = useContext(UserContext);
     return (
         <nav className='h-24 bg-blue-400 '>
-            <div className='flex py-4 px-4'>
-                <SmNav />
+            <div className='flex py-4 px-4 w-full justify-between'>
+                <SmNav /> 
+                { history.find(his=>his.status=='unSeen') ? <BellDot/> : <Bell/> }
             </div>
         </nav>
     )

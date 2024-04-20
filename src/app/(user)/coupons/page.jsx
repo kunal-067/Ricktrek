@@ -99,7 +99,7 @@ function CouponCard({ amount }) {
 
                                 <div className='flex flex-col mb-4'>
                                     <label htmlFor="price" className='float-left text-gray-700'>Price</label>
-                                    <input disabled={true} className='bg-gray-100 font-medium p-2 rounded-sm' placeholder='amount' type="text" value={`₹${quantity * 200}`} />
+                                    <input disabled={true} className='bg-gray-100 font-medium p-2 rounded-sm' placeholder='amount' type="text" value={`₹${quantity * amount}`} />
                                 </div>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>Cancel</AlertDialogCancel>

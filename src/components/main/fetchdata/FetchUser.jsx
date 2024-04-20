@@ -3,7 +3,8 @@ import { UserContext } from '@/app/context/Context'
 import axios from 'axios'
 
 function FetchUser() {
-    const { user, setUser, withdrawls, setWithdrawls, coupons, setCoupons, referrals, setReferrals, directRefs, setDirectRefs } = useContext(UserContext)
+    const { user, setUser, withdrawls, setWithdrawls, coupons, setCoupons,
+         referrals, setReferrals, directRefs, setDirectRefs, history, steHistory } = useContext(UserContext)
     useEffect(() => {
         if (!user) {
             axios.get('/api/user').then(res => {
@@ -35,6 +36,14 @@ function FetchUser() {
                 setDirectRefs(res.data.referrals);
             }).catch(err=>{
                 console.error(err);
+            })
+        }
+
+        if(!history){
+            axios.get('/api/history').then(res=>{
+                steHistory(res.data.history);
+            }).catch(err=>{
+                console.error(err)
             })
         }
     })

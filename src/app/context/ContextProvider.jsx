@@ -7,6 +7,7 @@ export function UserContextProvider({ children }) {
   const [coupons, setCoupons] = useState('');
   const [referrals, setReferrals] = useState('');
   const [directRefs, setDirectRefs] = useState('');
+  const [history, setHistory] = useState('');
   return (
     <UserContext.Provider value={{ user, setUser, withdrawls, setWithdrawls, coupons, setCoupons, referrals, setReferrals,
     directRefs, setDirectRefs }}>

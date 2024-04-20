@@ -1,4 +1,7 @@
 import {
+    Coupon
+} from "../models/coupon";
+import {
     User
 } from "../models/user";
 
@@ -49,16 +52,77 @@ export const couponClosing = async () => {
     try {
         const users = await User.find({});
 
+
         users.forEach(async user => {
+            const userCoupons = await Coupon.find({
+                user: user._id, status: 'approved'
+            });
+            const coupons1000 = userCoupons.find(coupon => coupon.amount == 1000);
+
+            const couponCount = coupons1000.reduce((acrr, curr) => {
+                if (curr.royalCount >= 30) {
+                    return acrr + 0
+                }
+                return acrr + curr.quantity;
+            }, 0)
+
+            let royality;
+            if (user.leftChild && user.rightChild) {
+                royality = couponCount * 1000 * 0.01;
+            } else {
+                royality = couponCount * 1000 * 0.005;
+            }
+            user.balance += royality;
+            user.earnings += royality;
+            if (royality >= 0) {
+                user.history.push({
+                    msg: `You earned ₹${royality} as royality`,
+                    type: 'royality',
+                    createdAt: Date.now()
+                })
+            }
+
+            coupons1000.map(async coupon => {
+                if(coupon.royalCount >= 30) return ;
+
+                coupon.royalCount += 1;
+                await coupon.save;
+            })
 
             if (user.leftsCoupon.find(coupon => coupon.amount == 1000) && user.rightsCoupon.find(coupon => coupon.amount == 1000)) {
-                user.balance += 300;
-                user.earnings += 300;
+                if (userCoupons.find(coupon => coupon.amount == 1000)) {
+                    user.balance += 300;
+                    user.earnings += 300;
+                    user.history.push({
+                        msg: `You got ₹300 as Matching income`,
+                        type: 'matching',
+                        createdAt: Date.now()
+                    })
+                } else {
+                    user.history.push({
+                        msg: `You have ₹300 , a match created in your team`,
+                        type: 'matching-fail',
+                        createdAt: Date.now()
+                    })
+                }
             }
 
             if (user.leftsCoupon.find(coupon => coupon.amount == 300) && user.rightsCoupon.find(coupon => coupon.amount == 300)) {
-                user.balance += 100;
-                user.earnings += 100;
+                if (userCoupons.find(coupon => coupon.amount == 1000) || userCoupons.find(coupon => coupon.amount == 300)) {
+                    user.balance += 100;
+                    user.earnings += 100;
+                    user.history.push({
+                        msg: `You got ₹100 as Matching income`,
+                        type: 'matching',
+                        createdAt: Date.now()
+                    })
+                } else {
+                    user.history.push({
+                        msg: `You have ₹100 , a match created in your team`,
+                        type: 'matching-fail',
+                        createdAt: Date.now()
+                    })
+                }
             }
 
             user.leftsCoupon.length = 0;
