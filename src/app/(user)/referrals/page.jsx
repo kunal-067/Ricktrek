@@ -77,7 +77,7 @@ const data = {
 
 const renderCustomNode = ({ nodeDatum, toggleNode, foreignObjectProps }) => {
     const handleClick = (e) => {
-        document.getElementById(nodeDatum.__rd3t.id + 1)?.classList.toggle('hidden')
+        // document.getElementById(nodeDatum.__rd3t.id + 1)?.classList.toggle('hidden')
         toggleNode();
     }
 
