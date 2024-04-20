@@ -9,9 +9,11 @@ import FetchUser from '@/components/main/fetchdata/FetchUser'
 
 function Laybout({ children }) {
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      return window.location.href = '/home'
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) {
+        return window.location.href = '/home'
+      }
     }
   }, [])
 
