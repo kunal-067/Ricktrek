@@ -19,13 +19,13 @@ function Laybout({ children }) {
 
   return (
     <>
+     <UserContextProvider>
       <NavBar />
       <main>
-        <UserContextProvider>
           <FetchUser />
           {children}
-        </UserContextProvider>
       </main>
+      </UserContextProvider>
     </>
   )
 }

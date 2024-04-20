@@ -50,7 +50,7 @@ function NavBar() {
         <nav className='h-24 bg-blue-400 '>
             <div className='flex py-4 px-4 w-full justify-between'>
                 <SmNav /> 
-                { history.find(his=>his.status=='unSeen') ? <BellDot/> : <Bell/> }
+                { history?.find(his=>his.status=='unSeen') ? <BellDot/> : <Bell/> }
             </div>
         </nav>
     )

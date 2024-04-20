@@ -1,3 +1,4 @@
+'use client'
 import { UserContext } from '@/app/context/Context';
 import { formattedDateTime } from '@/utils/time';
 import axios from 'axios';
