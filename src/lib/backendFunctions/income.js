@@ -54,11 +54,12 @@ export const couponClosing = async () => {
 
 
         users.forEach(async user => {
+            // console.log(user)
             const userCoupons = await Coupon.find({
                 user: user._id, status: 'approved'
             });
-            const coupons1000 = userCoupons.find(coupon => coupon.amount == 1000);
-
+            const coupons1000 = userCoupons.filter(coupon => coupon.amount == 1000);
+           
             const couponCount = coupons1000.reduce((acrr, curr) => {
                 if (curr.royalCount >= 30) {
                     return acrr + 0
@@ -77,8 +78,8 @@ export const couponClosing = async () => {
             if (royality >= 0) {
                 user.history.push({
                     msg: `You earned ₹${royality} as royality`,
-                    type: 'royality',
-                    createdAt: Date.now()
+                    hisType: 'royality',
+                    history: Date.now()
                 })
             }
 
@@ -95,13 +96,13 @@ export const couponClosing = async () => {
                     user.earnings += 300;
                     user.history.push({
                         msg: `You got ₹300 as Matching income`,
-                        type: 'matching',
+                        hisType: 'matching',
                         createdAt: Date.now()
                     })
                 } else {
                     user.history.push({
                         msg: `You have ₹300 , a match created in your team`,
-                        type: 'matching-fail',
+                        hisType: 'matching-fail',
                         createdAt: Date.now()
                     })
                 }
@@ -113,13 +114,13 @@ export const couponClosing = async () => {
                     user.earnings += 100;
                     user.history.push({
                         msg: `You got ₹100 as Matching income`,
-                        type: 'matching',
+                        hisType: 'matching',
                         createdAt: Date.now()
                     })
                 } else {
                     user.history.push({
                         msg: `You have ₹100 , a match created in your team`,
-                        type: 'matching-fail',
+                        hisType: 'matching-fail',
                         createdAt: Date.now()
                     })
                 }

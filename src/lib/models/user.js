@@ -103,9 +103,9 @@ const userSchema = new mongoose.Schema({
         default: Date.now()
     },
 
-    hostory: [{
+    history: [{
         msg: String,
-        type: String,
+        hisType: String,
         status:{
             type:String,
             enum:['seen','unSeen'],

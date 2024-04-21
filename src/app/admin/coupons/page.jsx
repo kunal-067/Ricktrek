@@ -283,6 +283,7 @@ function DataTable({ coupons = [] }) {
                         <TableHead className="w-[210px]">ID</TableHead>
                         <TableHead>User Id</TableHead>
                         <TableHead>Upi</TableHead>
+                        <TableHead>Quantity</TableHead>
                         <TableHead>Amount</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Created At</TableHead>
@@ -297,9 +298,9 @@ function DataTable({ coupons = [] }) {
                         return (
                             <TableRow key={i}>
                                 <TableCell className="font-medium">{coupon._id?.toString()}</TableCell>
-                                <TableCell className='underline'>
+                                <TableCell>
                                 <Dialog>
-                                    <DialogTrigger onClick={()=>appendUser(coupon.user)}>
+                                    <DialogTrigger onClick={()=>appendUser(coupon.user)}  className='underline text-blue-800'>
                                          {coupon.user} 
                                     </DialogTrigger>
                                     <DialogContent>
@@ -338,6 +339,7 @@ function DataTable({ coupons = [] }) {
                                 </TableCell>
 
                                 <TableCell>{coupon.upi}</TableCell>
+                                <TableCell>{coupon.quantity}</TableCell>
                                 <TableCell>{coupon.amount}</TableCell>
                                 <TableCell>{coupon.status}</TableCell>
                                 <TableCell>{formattedDateTime(coupon.createdAt).date}</TableCell>

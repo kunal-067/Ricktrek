@@ -20,6 +20,7 @@ export async function GET(req){
             referralCode:1,
             position:1,
             rank:1,
+            balance2:1,
             balance:1,
             earnings:1,
             rightCv:1,

@@ -33,7 +33,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 // import { data } from 'autoprefixer';
 
@@ -229,7 +229,7 @@ function DataTable({ withdrawls }) {
     const [user, setUser] = useState({});
 
     const approveWithdrawl = (withdrawlId, status) => {
-        axios.put('/api/withdraw', { withdrawlId , status }, { withCredentials: true }).then(res => {
+        axios.put('/api/withdraw', { withdrawlId, status }, { withCredentials: true }).then(res => {
             toast({
                 title: 'Success',
                 description: res.data.msg
@@ -243,13 +243,13 @@ function DataTable({ withdrawls }) {
         })
     }
 
-    function appendUser(id){
-        axios.get(`/api/user/${id}`).then(res=>{
+    function appendUser(id) {
+        axios.get(`/api/user/${id}`).then(res => {
             setUser(res.data.user)
-        }).catch(err=>{
+        }).catch(err => {
             console.log(err)
             toast({
-                title:err.response?.data.msg || err.message
+                title: err.response?.data.msg || err.message
             })
         })
     }
@@ -264,6 +264,7 @@ function DataTable({ withdrawls }) {
                         <TableHead>User Id</TableHead>
                         <TableHead>UPI</TableHead>
                         <TableHead>Amount</TableHead>
+                        <TableHead>Status</TableHead>
                         <TableHead>Created At</TableHead>
                         <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
@@ -279,45 +280,48 @@ function DataTable({ withdrawls }) {
                                     return (
                                         <TableRow key={i}>
                                             <TableCell className="font-medium">{withdrawl._id?.toString()}</TableCell>
-                                            <Dialog>
-                                                <DialogTrigger onClick={() => appendUser(withdrawl.user)}>
-                                                    <TableCell className='underline'> {withdrawl.user} </TableCell>
-                                                </DialogTrigger>
-                                                <DialogContent>
-                                                    <DialogTitle>
-                                                        User Details:
-                                                    </DialogTitle>
-                                                    <DialogDescription>
-                                                        <div className='mb-4'>
-                                                            <Label>Id:</Label>
-                                                            <Input disabled value={user._id} />
-                                                        </div>
+                                            <TableCell className='underline'>
+                                                <Dialog>
+                                                    <DialogTrigger onClick={() => appendUser(withdrawl.user)} className='underline text-blue-800'>
+                                                        {withdrawl.user}
+                                                    </DialogTrigger>
+                                                    <DialogContent>
+                                                        <DialogTitle>
+                                                            User Details:
+                                                        </DialogTitle>
+                                                        <DialogDescription>
+                                                            <div className='mb-4'>
+                                                                <Label>Id:</Label>
+                                                                <Input disabled value={user._id} />
+                                                            </div>
 
-                                                        <div className='mb-4'>
-                                                            <Label>Name:</Label>
-                                                            <Input disabled value={user.name} />
-                                                        </div>
+                                                            <div className='mb-4'>
+                                                                <Label>Name:</Label>
+                                                                <Input disabled value={user.name} />
+                                                            </div>
 
-                                                        <div className='mb-4'>
-                                                            <Label>Phone:</Label>
-                                                            <Input disabled value={user.phone} />
-                                                        </div>
+                                                            <div className='mb-4'>
+                                                                <Label>Phone:</Label>
+                                                                <Input disabled value={user.phone} />
+                                                            </div>
 
-                                                        <div className='mb-4'>
-                                                            <Label>Email:</Label>
-                                                            <Input disabled value={user.email} />
-                                                        </div>
+                                                            <div className='mb-4'>
+                                                                <Label>Email:</Label>
+                                                                <Input disabled value={user.email} />
+                                                            </div>
 
-                                                        <div className='mb-4'>
-                                                            <Label>Rank:</Label>
-                                                            <Input disabled value={user.rank} />
-                                                        </div>
-                                                    </DialogDescription>
-                                                </DialogContent>
+                                                            <div className='mb-4'>
+                                                                <Label>Rank:</Label>
+                                                                <Input disabled value={user.rank} />
+                                                            </div>
+                                                        </DialogDescription>
+                                                    </DialogContent>
 
-                                            </Dialog>
+                                                </Dialog>
+                                            </TableCell>
                                             <TableCell>{withdrawl.upi}</TableCell>
                                             <TableCell >{withdrawl.amount}</TableCell>
+                                            <TableCell>{withdrawl.status}</TableCell>
                                             <TableCell>{withdrawl.createdAt}</TableCell>
                                             <TableCell className="text-right">
                                                 {/* Approve button with alert  */}

@@ -48,13 +48,12 @@ function Withdrawls() {
         }else{
             setInsufficient(false)
         }
-    },[amount])
+    },[amount, user])
     return (
         <div className='mx-3 sm:mx-4'>
-            <div className='py-[1rem] bg-[#fff] -mt-10 pl-4 rounded-sm shadow-md'>
-                Withdrawls
+           <div className='text-xl font-bold py-[1rem] mx-1 bg-[#fff] -mt-10 pl-4 rounded-sm shadow-md'>
+                Wallet
             </div>
-
             <main>
                 <section className='bg-white shadow-md mt-4 p-2 py-6 flex flex-wrap'>
                     <WalletCard name={'2% Wallet'} balance={user?.balance2} description={'The amount can be used for buying products'}/>
