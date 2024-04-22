@@ -20,7 +20,7 @@ export const matchingIncome = async (userId, quantity, amount, couponId) => {
         }
 
         if (sponsor.leftChild?.equals(userId)) {
-            sponsor.leftCv += 5;
+            sponsor.leftCv += 5*quantity;
             sponsor.leftsCoupon.push({
                 user: userId,
                 amount,
@@ -29,7 +29,7 @@ export const matchingIncome = async (userId, quantity, amount, couponId) => {
             });
 
         } else if (sponsor.rightChild?.equals(userId)) {
-            sponsor.rightCv += 5;
+            sponsor.rightCv += 5*quantity;
             sponsor.rightsCoupon.push({
                 user: userId,
                 amount,

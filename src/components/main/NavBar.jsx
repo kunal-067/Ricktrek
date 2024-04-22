@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Sheet,
     SheetContent,
@@ -47,11 +47,14 @@ const navLinks = [
 function NavBar() {
     const {history} = useContext(UserContext);
     const router = useRouter();
+    useEffect(()=>{
+        console.log(history)
+    },[history])
     return (
         <nav className='h-24 bg-blue-400 '>
             <div className='flex py-4 px-4 w-full justify-between'>
                 <SmNav /> 
-                <div onClick={()=>router.push('/history')}>{ history?.find(his=>his.status=='unSeen') ? <BellDot/> : <Bell/> }</div>
+                <div onClick={()=>router.push('/history')}>{ history&&(history.filter(his=>his.status=='unSeen') > 0) ? <BellDot/> : <Bell/> }</div>
             </div>
         </nav>
     )

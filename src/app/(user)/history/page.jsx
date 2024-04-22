@@ -6,15 +6,14 @@ import Image from 'next/image';
 import React, { useContext, useEffect } from 'react'
 
 function History() {
-    const {history, setHistory} = useContext(UserContext);
+    const {history} = useContext(UserContext);
     useEffect(()=>{
         axios.patch('/api/history').then(res=>{
-            console.log(res);
-            setHistory(res.data.history);
+            console.log(res,  'klkjjhj hjh ');
         }).catch(err=>{
-            console.log(err);
+            console.error(err);
         })
-    })
+    },[])
     return (
         <div className='mx-2 sm:mx-6'>
             <div className='text-xl font-bold py-[1rem] mx-1 bg-[#fff] -mt-10 pl-4 rounded-sm shadow-md'>
