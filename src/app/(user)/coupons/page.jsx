@@ -31,6 +31,7 @@ function Coupons() {
                 Coupons
             </div>
             <div className='mt-3 mx-1 flex flex-wrap mb-`'>
+                <CouponCard amount={10000} />
                 <CouponCard amount={1000} />
                 <CouponCard amount={300} />
                 <CouponCard amount={1000} />
