@@ -126,8 +126,8 @@ export const couponClosing = async () => {
                 }
             }
 
-            user.leftsCoupon.length = 0;
-            user.rightsCoupon.length = 0;
+            user.leftsCoupon = [];
+            user.rightsCoupon = [];
 
             await user.save();
         })
