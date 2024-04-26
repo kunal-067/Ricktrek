@@ -10,7 +10,7 @@ export async function GET(req){
         const user = await User.findById(userId);
         if(!user) return NextResponse.json({msg:'Invalid user'}, {status:404});
 
-        return NextResponse.json({msg:'successfull', history:user.history});
+        return NextResponse.json({msg:'successfull', history:user.history.reverse()});
     }catch(err){
         console.log('history api error', err.message)
         return NextResponse.json({msg:'Internal server error'}, {status:500})

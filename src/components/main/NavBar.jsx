@@ -54,7 +54,7 @@ function NavBar() {
         <nav className='h-24 bg-blue-400 '>
             <div className='flex py-4 px-4 w-full justify-between'>
                 <SmNav /> 
-                <div onClick={()=>router.push('/history')}>{ history&&(history.filter(his=>his.status=='unSeen') > 0) ? <BellDot/> : <Bell/> }</div>
+                <div onClick={()=>router.push('/history')}>{ history&&(history.filter(his=>his.status=='unSeen').length > 0) ? <BellDot/> : <Bell/> }</div>
             </div>
         </nav>
     )
