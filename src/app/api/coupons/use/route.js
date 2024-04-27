@@ -14,7 +14,7 @@ export async function POST(req){
         const coupon = await Coupon.findById(couponId);
         if(!coupon) NextResponse.json({msg:'Invalid coupon ! try later'}, {status:404});
 
-        user.balance2 += (coupon.amount*1.2);
+        user.balance2 += (coupon.quantity*coupon.amount*1.2);
         await coupon.deleteOne();
         await user.save();
 

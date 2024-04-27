@@ -43,7 +43,7 @@ function Coupons() {
                 {
                     coupons.map(coupon => {
                         return (
-                            <CouponCard key={coupon._id} couponId={coupon._id} amount={coupon.amount} />
+                            <CouponCard key={coupon._id} quantity={coupon.quantity} couponId={coupon._id} amount={coupon.amount} />
                         )
                     })
                 }
@@ -52,7 +52,7 @@ function Coupons() {
     )
 }
 
-function CouponCard({ amount, couponId }) {
+function CouponCard({ amount, couponId, quantity }) {
     const handleSubmit = (e) => {
         e.preventDefault()
         axios.post('/api/coupons/use', { couponId }).then(res => {
@@ -74,39 +74,40 @@ function CouponCard({ amount, couponId }) {
             <div className='w-full'>
                 <b>Coupon</b>
                 <p>₹{amount}</p>
-                <div className='flex items-center justify-end w-full'>
+                <div className='flex items-center justify-between w-full'>
 
-                    <Dialog>
-                        <DialogTrigger className='flex justify-center items-center text-white size-9 bg-purple-700 p-2 rounded-xl float-right mr-2'>
-                            <CircleHelp />
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Reedem Coupon</DialogTitle>
-                                <DialogDescription>
-                                    You can reedem the amount of coupon in your wallet that can be used in buying products.
-                                </DialogDescription>
-                            </DialogHeader>
-                        </DialogContent>
-                    </Dialog>
+                    <div className='float-left w-full text-[16px] font-mono'>Quantity: <span className='font-bold'>{quantity}</span></div>
 
+                    <div className='flex'>
+                        <Dialog>
+                            <DialogTrigger className='flex justify-center items-center text-white size-9 bg-purple-700 p-2 rounded-xl float-right mr-2'>
+                                <CircleHelp />
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Reedem Coupon</DialogTitle>
+                                    <DialogDescription>
+                                        You can reedem the amount of coupon in your wallet that can be used in buying products.
+                                    </DialogDescription>
+                                </DialogHeader>
+                            </DialogContent>
+                        </Dialog>
 
+                        <AlertDialog>
+                            <AlertDialogTrigger className='bg-green-700 rounded-sm flex justify-center items-center text-white px-3 py-[5px]'> Use </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogTitle className='text-center'>Convert Reedem Coupon</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action is not reversiable You can use this coin further for buying products.
+                                </AlertDialogDescription>
 
-                    <AlertDialog>
-                        <AlertDialogTrigger className='bg-green-700 rounded-sm flex justify-center items-center text-white px-3 py-[5px]'> Use </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogTitle className='text-center'>Convert Reedem Coupon</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                This action is not reversiable You can use this coin further for buying products.
-                            </AlertDialogDescription>
-
-                            <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={handleSubmit}>Convert</AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
-
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction onClick={handleSubmit}>Convert</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                    </div>
 
                 </div>
             </div>
