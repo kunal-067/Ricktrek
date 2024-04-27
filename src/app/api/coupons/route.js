@@ -147,12 +147,14 @@ export async function PUT(req) {
         }
 
         coupon.status = status;
-        await matchingIncome(coupon.user, coupon.quantity, coupon.amount, coupon._id);
-        await coupon.save();
 
         const coupUser = await User.findById(coupon.user);
         coupUser.status = 'Active';
         await coupUser.save();
+
+        await matchingIncome(coupon.user, coupon.quantity, coupon.amount, coupon._id, coupUser.name);
+        await coupon.save();
+
         return NextResponse.json({
             msg: 'coupon status updated successfully !'
         })

@@ -5,7 +5,7 @@ import {
     User
 } from "../models/user";
 
-export const matchingIncome = async (userId, quantity, amount, couponId) => {
+export const matchingIncome = async (userId, quantity, amount, couponId, refName) => {
     try {
         const sponsor = await User.findOne({
             $or: [{
@@ -20,7 +20,17 @@ export const matchingIncome = async (userId, quantity, amount, couponId) => {
         }
 
         if (sponsor.leftChild?.equals(userId)) {
-            sponsor.leftCv += 5*quantity;
+            const cvIncrement = (amount, quantity) => {
+                if (amount == 10000) {
+                    return 50 * quantity;
+                } else if (amount == 1000) {
+                    return 5 * quantity;
+                } else {
+                    return 0; 
+                }
+            };
+
+            sponsor.leftCv += cvIncrement(amount, quantity);
             sponsor.leftsCoupon.push({
                 user: userId,
                 amount,
@@ -28,8 +38,25 @@ export const matchingIncome = async (userId, quantity, amount, couponId) => {
                 quantity
             });
 
+            if (cvIncrement != 0) {
+                sponsor.history.push({
+                    msg: `You got ${cvIncrement(amount, quantity)} cv in your left group from ${refName}`,
+                    hisType: 'cv-increment',
+                    createdAt: Date.now()
+                })
+            }
+
         } else if (sponsor.rightChild?.equals(userId)) {
-            sponsor.rightCv += 5*quantity;
+            const cvIncrement = (amount, quantity) => {
+                if (amount == 10000) {
+                    return 50 * quantity;
+                } else if (amount == 1000) {
+                    return 5 * quantity;
+                } else {
+                    return 0;
+                }
+            };
+            sponsor.rightCv += cvIncrement(amount, quantity);
             sponsor.rightsCoupon.push({
                 user: userId,
                 amount,
@@ -37,6 +64,13 @@ export const matchingIncome = async (userId, quantity, amount, couponId) => {
                 quantity
             });
 
+            if (cvIncrement != 0) {
+                sponsor.history.push({
+                    msg: `You got ${cvIncrement(amount, quantity)} cv in your right group from ${refName}`,
+                    hisType: 'cv-increment',
+                    createdAt: Date.now()
+                })
+            }
         }
 
         await sponsor.save();
@@ -56,11 +90,12 @@ export const couponClosing = async () => {
         users.forEach(async user => {
             // console.log(user)
             const userCoupons = await Coupon.find({
-                user: user._id, status: 'approved'
+                user: user._id,
+                status: 'approved'
             });
             const coupons1000 = userCoupons.filter(coupon => coupon.amount == 1000);
             const coupons10000 = userCoupons.filter(coupon => coupon.amount == 10000);
-           
+
             const couponCount = coupons1000.reduce((acrr, curr) => {
                 if (curr.royalCount >= 30) {
                     return acrr + 0
@@ -99,13 +134,13 @@ export const couponClosing = async () => {
             }
 
             coupons1000.map(async coupon => {
-                if(coupon.royalCount >= 30) return ;
+                if (coupon.royalCount >= 30) return;
 
                 coupon.royalCount += 1;
                 await coupon.save();
             })
             coupons10000.map(async coupon => {
-                if(coupon.royalCount >= 30) return ;
+                if (coupon.royalCount >= 30) return;
 
                 coupon.royalCount += 1;
                 await coupon.save();
@@ -114,7 +149,7 @@ export const couponClosing = async () => {
             if (user.leftsCoupon.find(coupon => coupon.amount == 10000) && user.rightsCoupon.find(coupon => coupon.amount == 10000)) {
                 if (userCoupons.find(coupon => coupon.amount == 10000)) {
                     user.balance += 3000;
-                    user.earnings += 3000; 
+                    user.earnings += 3000;
                     user.history.push({
                         msg: `You got ₹3000 as Matching income`,
                         hisType: 'matching',
@@ -130,7 +165,7 @@ export const couponClosing = async () => {
             }
 
             if (user.leftsCoupon.find(coupon => coupon.amount == 1000) && user.rightsCoupon.find(coupon => coupon.amount == 1000)) {
-                if ( userCoupons.find(coupon => coupon.amount == 10000) || userCoupons.find(coupon => coupon.amount == 1000) ) {
+                if (userCoupons.find(coupon => coupon.amount == 10000) || userCoupons.find(coupon => coupon.amount == 1000)) {
                     user.balance += 300;
                     user.earnings += 300;
                     user.history.push({
