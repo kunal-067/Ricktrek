@@ -61,7 +61,8 @@ function CouponCard({ amount }) {
     return (
         <div className='m-1 flex flex-1 bg-[#fff] rounded-sm p-2'>
             <div className='flex size-[100px] w-[120px] justify-center items-center bg-gray-200 mr-2 p-2'>
-                <img src="omilogo.png" alt="kl" className='w-full' />
+                {/* <img src="omilogo.png" alt="kl" className='w-full' /> */}
+                <h2 className='font-bold'>Richtrek</h2>
             </div>
             <div className='w-full'>
                 <b>Coupon</b>

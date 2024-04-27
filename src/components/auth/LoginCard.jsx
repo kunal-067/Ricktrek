@@ -54,8 +54,9 @@ function LoginCard() {
     }
     return (
         <div className='bg-white shadow-md p-4 rounded-md w-[95vw] max-w-[450px] '>
-            <div className='border-b-[1px] border-slate-100 p-4 pt-2' >
-                <Image className='mx-auto' src={'/omilogo.png'} alt='Logo' width={160} height={100} />
+            <div className='border-b-[1px] border-slate-100 p-4 pt-2 flex justify-center items-center' >
+                {/* <Image className='mx-auto' src={'/omilogo.png'} alt='Logo' width={160} height={100} /> */}
+                <h2 className=' text-[32px] font-bold '>Richtrek</h2>
             </div>
             <div>
                 <form className="mt-6" onSubmit={handleSubmit}>

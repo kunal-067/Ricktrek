@@ -78,8 +78,9 @@ function SignUpCard() {
     useEffect(()=>{console.log(position)}, [position])
     return (
         <div className='bg-white shadow-md p-4 rounded-md w-[95vw] md:max-w-[500px] max-w-[450px] md:px-10'>
-            <div className='border-b-[1px] border-slate-100 p-4 pt-2' >
-                <Image className='mx-auto' src={'/omilogo.png'} alt='Logo' width={100} height={100} />
+            <div className='border-b-[1px] border-slate-100 p-4 pt-2 flex justify-center items-center' >
+                {/* <Image className='mx-auto' src={'/omilogo.png'} alt='Logo' width={100} height={100} /> */}
+                <h2 className=' text-[32px] font-bold '>Richtrek</h2>
             </div>
 
             <div>
