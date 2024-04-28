@@ -20,6 +20,7 @@ function FetchUser() {
 
         if (!referrals) {
             axios.get('/api/referrals').then(res => {
+                // console.log(res, 'labar labar')
                 setReferrals(res.data.tree);
             }).catch(err => console.log(err))
         }
@@ -32,7 +33,7 @@ function FetchUser() {
 
         if(!directRefs){
             axios.get('/api/referrals/get-direct').then(res=>{
-                console.log(res);
+                // console.log(res, 'lap lap');
                 setDirectRefs(res.data.referrals);
             }).catch(err=>{
                 console.error(err);
@@ -41,7 +42,6 @@ function FetchUser() {
 
         if(!history){
             axios.get('/api/history').then(res=>{
-                console.log(res, 'klpkl oo kjk ')
                 setHistory(res.data.history);
             }).catch(err=>{
                 console.error(err)

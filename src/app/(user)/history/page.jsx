@@ -35,7 +35,8 @@ function MessageCard({message, date}){
     return(
         <div className='bg-white p-2 mx-1 mb-2 rounded-md shadow-md flex'>
             <div className='size-12 bg-slate-300 flex justify-center items-center rounded-md'>
-                <Image src='/omilogo.png' alt='Omi-logo' className='w-full' width={100} height={100}/>
+                {/* <Image src='/omilogo.png' alt='Omi-logo' className='w-full' width={100} height={100}/> */}
+                <h2 className='font-bold'>Richtrek</h2>
             </div>
 
             <div className='px-2 w-full h-full items-end' >

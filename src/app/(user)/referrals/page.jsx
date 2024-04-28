@@ -122,13 +122,13 @@ function Referrals() {
         };
 
         // Recursively convert the left and right children, if they exist
-        if (root.leftChild) {
+        if (root?.leftChild) {
             // console.log(referrals)
-            const node = referrals.find(elem => elem._id == root.leftChild)
+            const node = referrals.find(elem => elem?._id == root.leftChild)
             data.children.push(readyTreeData(node));
         }
-        if (root.rightChild) {
-            const node = referrals.find(elem => elem._id == root.rightChild)
+        if (root?.rightChild) {
+            const node = referrals.find(elem => elem?._id == root.rightChild)
             data.children.push(readyTreeData(node));
         }
 
