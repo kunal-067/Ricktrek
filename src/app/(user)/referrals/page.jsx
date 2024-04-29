@@ -148,11 +148,11 @@ function Referrals() {
         setY(window.innerWidth/16);
     },[])
 
-    // if (!referrals) {
-    //     return (
-    //         <>Loading...</>
-    //     )
-    // }
+    if (!referrals) {
+        return (
+            <>Loading...</>
+        )
+    }
 
     return (
         <div className='mx-4'>

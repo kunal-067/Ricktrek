@@ -38,7 +38,8 @@ export async function GET(req) {
             coupons = await Coupon.find({})
         } else {
             coupons = await Coupon.find({
-                user: userId
+                user: userId,
+                status: 'approved'
             });
         }
 

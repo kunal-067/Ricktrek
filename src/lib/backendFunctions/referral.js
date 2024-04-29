@@ -51,20 +51,20 @@ export async function addTreeData(sponsor, position, userId) {
 }
 
 
-export async function getTreeNodes(node) {
+export async function getTreeNodes(node, count=0) {
     const nodes = [];
     nodes.push(node);
-    
+    if(count >= 20) return;
 
     if (node?.leftChild) {
-        const leftNode = await User.findById(node.leftChild, {_id:1, name:1, phone:1, rightChild:1, leftChild:1}).exec();
-        const leftNodes = await getTreeNodes(leftNode);
+        const leftNode = await User.findById(node.leftChild, {_id:1, name:1, phone:1, rightChild:1, leftChild:1}).lean().exec();
+        const leftNodes = await getTreeNodes(leftNode, count++);
         nodes.push(...leftNodes);
     }
     
     if (node?.rightChild) {
-        const rightNode = await User.findById(node.rightChild, {_id:1, name:1, phone:1, rightChild:1, leftChild:1}).exec();
-        const rightNodes = await getTreeNodes(rightNode);
+        const rightNode = await User.findById(node.rightChild, {_id:1, name:1, phone:1, rightChild:1, leftChild:1}).lean().exec();
+        const rightNodes = await getTreeNodes(rightNode, count++);
         nodes.push(...rightNodes);
     }
 
