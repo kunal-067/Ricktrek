@@ -35,7 +35,7 @@ export async function GET(req) {
 
         let coupons;
         if (user.role == 'admin') {
-            coupons = await Coupon.find({})
+            coupons = await Coupon.find({status:'pending'})
         } else {
             coupons = await Coupon.find({
                 user: userId,
@@ -153,12 +153,13 @@ export async function PUT(req) {
         coupUser.status = 'Active';
         await coupUser.save();
 
-        await matchingIncome(coupon.user, coupon.quantity, coupon.amount, coupon._id, coupUser.name);
         await coupon.save();
-
-        return NextResponse.json({
+        
+        NextResponse.json({
             msg: 'coupon status updated successfully !'
         })
+
+        matchingIncome(coupon.user, coupon.quantity, coupon.amount, coupon._id, coupUser.name);
 
     } catch (error) {
         console.error('error in coupon api', error.message);
