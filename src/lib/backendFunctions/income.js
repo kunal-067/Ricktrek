@@ -30,7 +30,8 @@ export const matchingIncome = async (userId, quantity, amount, couponId, refName
                 }
             };
 
-            sponsor.leftCv += cvIncrement(amount, quantity);
+            const increaseCvBy = cvIncrement(amount, quantity);
+            sponsor.leftCv += increaseCvBy;
             sponsor.leftsCoupon.push({
                 user: userId,
                 amount,
@@ -38,13 +39,13 @@ export const matchingIncome = async (userId, quantity, amount, couponId, refName
                 quantity
             });
 
-            // if (cvIncrement != 0) {
-            //     sponsor.history.push({
-            //         msg: `You got ${cvIncrement(amount, quantity)} cv in your left group from ${refName}`,
-            //         hisType: 'cv-increment',
-            //         createdAt: Date.now()
-            //     })
-            // }
+            if (cvIncrement != 0) {
+                sponsor.history.push({
+                    msg: `You got ${increaseCvBy} cv in your left group from ${refName}`,
+                    hisType: 'cv-increment',
+                    createdAt: Date.now()
+                })
+            }
 
         } else if (sponsor.rightChild?.equals(userId)) {
             const cvIncrement = (amount, quantity) => {
@@ -56,7 +57,8 @@ export const matchingIncome = async (userId, quantity, amount, couponId, refName
                     return 0;
                 }
             };
-            sponsor.rightCv += cvIncrement(amount, quantity);
+            const increaseCvBy = cvIncrement(amount, quantity);
+            sponsor.rightCv += increaseCvBy ;
             sponsor.rightsCoupon.push({
                 user: userId,
                 amount,
@@ -64,13 +66,13 @@ export const matchingIncome = async (userId, quantity, amount, couponId, refName
                 quantity
             });
 
-            // if (cvIncrement != 0) {
-            //     sponsor.history.push({
-            //         msg: `You got ${cvIncrement(amount, quantity)} cv in your right group from ${refName}`,
-            //         hisType: 'cv-increment',
-            //         createdAt: Date.now()
-            //     })
-            // }
+            if (cvIncrement != 0) {
+                sponsor.history.push({
+                    msg: `You got ${increaseCvBy} cv in your right group from ${refName}`,
+                    hisType: 'cv-increment',
+                    createdAt: Date.now()
+                })
+            }
         }
 
         await sponsor.save();

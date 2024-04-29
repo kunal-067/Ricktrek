@@ -117,7 +117,7 @@ function Referrals() {
         // Initialize an object with the current node's name
         const data = {
             name: root.name,
-            phone: root.phone,
+            // phone: root.phone,
             children: []
         };
 
