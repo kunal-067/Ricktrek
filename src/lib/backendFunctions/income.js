@@ -7,6 +7,7 @@ import {
 
 export const matchingIncome = async (userId, quantity, amount, couponId, refName) => {
     try {
+
         const sponsor = await User.findOne({
             $or: [{
                 leftChild: userId
@@ -76,7 +77,7 @@ export const matchingIncome = async (userId, quantity, amount, couponId, refName
         }
 
         await sponsor.save();
-        await matchingIncome(sponsor._id, quantity, amount, couponId)
+        await matchingIncome(sponsor._id, quantity, amount, couponId, refName)
 
     } catch (e) {
         console.log("Error in income function : " + e);

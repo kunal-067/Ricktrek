@@ -8,6 +8,7 @@ import {
     matchPassword
 } from "@/utils/api/hashPass.util";
 import { generateToken } from "@/utils/api/jwt.utils";
+import next from "next";
 import { cookies } from "next/headers";
 import {
     NextResponse
@@ -36,6 +37,9 @@ export async function POST(req) {
             })
         }
 
+        if(!user){
+            return NextResponse.json({msg:'it seesms, no account registered with this phone no.'},{status:404})
+        }
         const isPassRight = await matchPassword(password, user.password);
         if (!isPassRight) {
             return NextResponse.json({

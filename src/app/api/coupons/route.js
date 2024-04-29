@@ -43,6 +43,7 @@ export async function GET(req) {
             });
         }
 
+        console.log(coupons.length, 'length');
         return NextResponse.json({
             msg: 'successfull',
             coupons
@@ -154,16 +155,18 @@ export async function PUT(req) {
         await coupUser.save();
 
         await coupon.save();
-        
-        NextResponse.json({
+    
+        matchingIncome(coupon.user, coupon.quantity, coupon.amount, coupon._id, coupUser.name);
+
+        return NextResponse.json({
             msg: 'coupon status updated successfully !'
         })
 
-        matchingIncome(coupon.user, coupon.quantity, coupon.amount, coupon._id, coupUser.name);
 
     } catch (error) {
         console.error('error in coupon api', error.message);
-        return NextResponse.json({
+        return NextResponse.json(
+        {
             msg: 'Internal server error',
             error: error.message
         }, {
