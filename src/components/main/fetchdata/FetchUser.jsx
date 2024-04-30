@@ -33,7 +33,7 @@ function FetchUser() {
 
         if(!directRefs){
             axios.get('/api/referrals/get-direct').then(res=>{
-                // console.log(res, 'lap lap');
+                console.log(res, 'lap lap');
                 setDirectRefs(res.data.referrals);
             }).catch(err=>{
                 console.error(err);
