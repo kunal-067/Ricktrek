@@ -19,6 +19,23 @@ function FetchUser() {
         }
 
         if (!referrals) {
+            setReferrals([]);
+            const getReferrals = async (id) =>{
+                try {
+                    const {data} = await axios.get(`/api/referrals?userId=${id}`);
+                    setReferrals(prev => [...prev, ...data.tree]);
+
+                    if(!data.lastPage){
+                        const lastUser = data.tree[19];
+                        await getReferrals(lastUser._id);
+                    }else{
+                        return
+                    }
+                } catch (error) {
+                    console.log('error in getting tree', err);
+                    return false;
+                }
+            }
             axios.get('/api/referrals').then(res => {
                 // console.log(res, 'labar labar')
                 setReferrals(res.data.tree);

@@ -123,7 +123,6 @@ function Referrals() {
 
         // Recursively convert the left and right children, if they exist
         if (root?.leftChild) {
-            // console.log(referrals)
             const node = referrals.find(elem => elem?._id == root.leftChild)
             data.children.push(readyTreeData(node));
         }

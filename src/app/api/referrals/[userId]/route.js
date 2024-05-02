@@ -19,31 +19,31 @@ export async function GET(req,{params}){
         if(!user) NextResponse.json({msg: "User not found! try later"}, {status:404});
 
         const referrals = await User.find({referredBy: user.referralCode}, {_id:1, phone:1, name:1, status:1});
-        const spr = await User.find({referredBy:"XDZBHWX7VO49", status:"Active"}, {phone:1, status:1, name:1})
-        const userTre = await getTreeNodes(user);
-        const matchingNo = [];
-        userTre.map(e=>{
-            spr.map(s=>{
-                if(s.phone == e.phone){
-                    // console.log(e);
-                    matchingNo.push(e);
-                    return e.phone;
-                }else{
-                    return null;
-                }
-            })
-        })
-        const coupon = [];
-        matchingNo.map(async elem=>{
-            const cup = await Coupon.find({user:elem._id}, {quantity:1, amount:1});
-            // console.log(elem)
-            cup.map(e=>{
-                console.log(e)
-                coupon.push(e)
-            })
-        })
+        // const spr = await User.find({referredBy:"XDZBHWX7VO49", status:"Active"}, {phone:1, status:1, name:1})
+        // const userTre = await getTreeNodes(user);
+        // const matchingNo = [];
+        // // userTre.map(e=>{
+        // //     spr.map(s=>{
+        // //         if(s.phone == e.phone){
+        // //             // console.log(e);
+        // //             matchingNo.push(e);
+        // //             return e.phone;
+        // //         }else{
+        // //             return null;
+        // //         }
+        // //     })
+        // // })
+        // // const coupon = [];
+        // // matchingNo.map(async elem=>{
+        // //     const cup = await Coupon.find({user:elem._id}, {quantity:1, amount:1});
+        // //     // console.log(elem)
+        // //     cup.map(e=>{
+        // //         console.log(e)
+        // //         coupon.push(e)
+        // //     })
+        // // })
 
-        console.log(coupon)
+        // // console.log(coupon)
 
         return NextResponse.json({msg:'successfull', referrals:referrals.reverse()});
     } catch (error) {

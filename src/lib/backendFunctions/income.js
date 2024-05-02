@@ -114,13 +114,17 @@ export const couponClosing = async () => {
             }, 0)
 
             let royality = 0;
-            if (user.leftChild && user.rightChild) {
+            if(User.find({referredBy: user.referralCode}).length >= 5){
+                royality += couponCount * 1000 * 10;
+            }else if (user.leftChild && user.rightChild) {
                 royality += couponCount * 1000 * 0.01;
             } else {
                 royality += couponCount * 1000 * 0.005;
             }
 
-            if (user.leftChild && user.rightChild) {
+            if(User.find({referredBy: user.referralCode}).length >= 5){
+                royality += couponCount2nd * 10000 * 10;
+            }else if (user.leftChild && user.rightChild) {
                 royality += couponCount2nd * 10000 * 0.01;
             } else {
                 royality += couponCount2nd * 10000 * 0.005;
@@ -150,7 +154,7 @@ export const couponClosing = async () => {
             })
 
             if (user.leftsCoupon.find(coupon => coupon.amount == 10000) && user.rightsCoupon.find(coupon => coupon.amount == 10000)) {
-                if (userCoupons.find(coupon => coupon.amount == 10000)) {
+              if (userCoupons.find(coupon => coupon.amount == 10000)) {
                     user.balance += 3000;
                     user.earnings += 3000;
                     user.history.push({
