@@ -28,7 +28,7 @@ export async function GET(req){
         }
 
         const tree = await getTreeNodes(user)
-        return NextResponse.json({msg:'successfull', tree, lastPage: tree.length < 29, length:tree.length})
+        return NextResponse.json({msg:'successfull', tree, lastPage: tree.length < 19, length:tree.length})
     }catch(err){
         console.error('error in getting referrals', err);
         return NextResponse.json({msg:'internal server error ! please try later', error:err.message}, {status:500})

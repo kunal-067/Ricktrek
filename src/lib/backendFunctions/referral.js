@@ -54,7 +54,7 @@ export async function addTreeData(sponsor, position, userId) {
 export async function getTreeNodes(node, count = 0) {
     const nodes = [];
     nodes.push(node);
-    if (count >= 15) return [];
+    if (count >= 10) return [];
 
     if (node?.leftChild) {
         const leftNode = await User.findById(node.leftChild, {
