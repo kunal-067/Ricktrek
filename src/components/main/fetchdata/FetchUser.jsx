@@ -4,7 +4,7 @@ import axios from 'axios'
 
 function FetchUser() {
     const { user, setUser, withdrawls, setWithdrawls, coupons, setCoupons,
-         referrals, setReferrals, directRefs, setDirectRefs, history, setHistory } = useContext(UserContext)
+        referrals, setReferrals, directRefs, setDirectRefs, history, setHistory } = useContext(UserContext)
     useEffect(() => {
         if (!user) {
             axios.get('/api/user').then(res => {
@@ -18,29 +18,67 @@ function FetchUser() {
             }).catch(err => console.error(err))
         }
 
-        if (!referrals) {
-            setReferrals([]);
-            const getReferrals = async (id) =>{
-                try {
-                    const {data} = await axios.get(`/api/referrals?userId=${id}`);
-                    setReferrals(prev => [...prev, ...data.tree]);
+        // if (!referrals) {
+        //     const dataArry = []
+        //     const getReferrals = async (id) => {
+        //         try {
+        //             const { data } = await axios.get(`/api/referrals?userId=${id}`);
+        //             console.log(data, 'chutiya insan')
+        //             dataArry.push(...data.tree);
 
-                    if(!data.lastPage){
-                        const lastUser = data.tree[19];
-                        await getReferrals(lastUser._id);
-                    }else{
-                        return
+        //             const lastUsers = data.tree.filter(elem => elem?.node == true);
+
+        //             lastUsers.map(async user => {
+        //                 if (user?.node) {
+        //                     console.log('amin')
+        //                     await getReferrals(user?._id);
+        //                 } else {
+        //                     return
+        //                 }
+        //             })
+
+        //         } catch (error) {
+        //             console.error('error in getting tree', error);
+        //             return false;
+        //         }
+        //     }
+        //     getReferrals(null).then(res => setReferrals(dataArry)).catch(err=>console.log(err))
+
+            if (!referrals) {
+                const getReferrals = async (id, uniqueReferrals = []) => {
+                    try {
+                        const { data } = await axios.get(`/api/referrals?userId=${id}`);
+                        console.log(data, 'chutiya insan');
+            
+                        // Filter out duplicates based on _id
+                        const filteredData = data.tree.filter(elem => !uniqueReferrals.some(referral => referral?._id === elem?._id));
+                        uniqueReferrals.push(...filteredData);
+            
+                        const lastUsers = filteredData.filter(elem => elem?.node === true);
+            
+                        // Recursively call getReferrals for last users
+                        await Promise.all(lastUsers.map(async user => {
+                            if (user?.node) {
+                                console.log('amin');
+                                await getReferrals(user?._id, uniqueReferrals);
+                            }
+                        }));
+            
+                        return uniqueReferrals;
+                    } catch (error) {
+                        console.error('error in getting tree', error);
+                        return false;
                     }
-                } catch (error) {
-                    console.log('error in getting tree', err);
-                    return false;
-                }
+                };
+            
+                getReferrals(null)
+                    .then(res => {
+                        setReferrals(res); // Set state with unique referral data
+                    })
+                    .catch(err => console.log(err));
             }
-            axios.get('/api/referrals').then(res => {
-                // console.log(res, 'labar labar')
-                setReferrals(res.data.tree);
-            }).catch(err => console.log(err))
-        }
+            
+        // }
 
         if (!coupons) {
             axios.get('/api/coupons').then(res => {
@@ -48,19 +86,19 @@ function FetchUser() {
             }).catch(err => console.error(err))
         }
 
-        if(!directRefs){
-            axios.get('/api/referrals/get-direct').then(res=>{
+        if (!directRefs) {
+            axios.get('/api/referrals/get-direct').then(res => {
                 console.log(res, 'lap lap');
                 setDirectRefs(res.data.referrals);
-            }).catch(err=>{
+            }).catch(err => {
                 console.error(err);
             })
         }
 
-        if(!history){
-            axios.get('/api/history').then(res=>{
+        if (!history) {
+            axios.get('/api/history').then(res => {
                 setHistory(res.data.history);
-            }).catch(err=>{
+            }).catch(err => {
                 console.error(err)
             })
         }

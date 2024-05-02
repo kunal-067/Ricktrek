@@ -16,8 +16,9 @@ export async function GET(req){
       
         const header = headers();
         let userId ;
-        if(query.get('userId')){
-            userId = req.query.userId;
+        const queryU = query.get('userId') ;
+        if(queryU && queryU != 'null'){
+            userId = queryU;
         }else {
             userId = header.get('userId');
         }
@@ -28,7 +29,7 @@ export async function GET(req){
         }
 
         const tree = await getTreeNodes(user)
-        return NextResponse.json({msg:'successfull', tree, lastPage: tree.length < 19, length:tree.length})
+        return NextResponse.json({msg:'successfull', tree, lastPage: tree.length < 21, length:tree.length})
     }catch(err){
         console.error('error in getting referrals', err);
         return NextResponse.json({msg:'internal server error ! please try later', error:err.message}, {status:500})
