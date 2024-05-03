@@ -53,13 +53,13 @@ export async function addTreeData(sponsor, position, userId) {
 
 export async function getTreeNodes(node, count = 0) {
     const nodes = [];
-    if(node){
-    if(count == 10){
-        node.node = true
-    }else{
-        node.node = false
+    if (node) {
+        if (count == 10) {
+            node.node = true
+        } else {
+            node.node = false
+        }
     }
-}
     nodes.push(node);
     if (count >= 10) return nodes;
 
