@@ -117,7 +117,7 @@ export const couponClosing = async () => {
 
             let royality = 0;
             if(directRefs.length >= 5){
-                royality += couponCount * 1000 * 10;
+                royality += couponCount * 1000 * 0.1;
             }else if (directRefs.length >= 2) {
                 royality += couponCount * 1000 * 0.01;
             } else {
@@ -125,7 +125,7 @@ export const couponClosing = async () => {
             }
 
             if(directRefs.length >= 5){
-                royality += couponCount2nd * 10000 * 10;
+                royality += couponCount2nd * 10000 * 0.1;
             }else if (directRefs.length >= 2) {
                 royality += couponCount2nd * 10000 * 0.01;
             } else {

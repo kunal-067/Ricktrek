@@ -53,7 +53,7 @@ function Coupons() {
     useEffect(() => {
         const getCoupons = async () => {
             try {
-                const res = await axios.get('/api/coupons', { withCredentials: true });
+                const res = await axios.get('/api/coupons?admin=true', { withCredentials: true });
                 setCoupons(res.data.coupons);
             } catch (err) {
                 console.log('error in getting users', err)

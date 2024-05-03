@@ -82,6 +82,7 @@ function FetchUser() {
 
         if (!coupons) {
             axios.get('/api/coupons').then(res => {
+                console.log(res, 'hello js klo')
                 setCoupons(res.data.coupons)
             }).catch(err => console.error(err))
         }

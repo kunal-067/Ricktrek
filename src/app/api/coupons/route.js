@@ -23,6 +23,9 @@ export async function GET(req) {
     try {
         const header = headers();
         const userId = header.get('userId');
+        const url = new URL(req.url);
+        const query = new URLSearchParams(url.searchParams);
+        const iAdminFetch = query.get('admin');
 
         const user = await User.findById(userId);
         if (!user) {
@@ -34,8 +37,8 @@ export async function GET(req) {
         }
 
         let coupons;
-        if (user.role == 'admin') {
-            coupons = await Coupon.find({status:'pending'})
+        if (iAdminFetch && user.role == 'admin') {
+            coupons = await Coupon.find({status:'pending'});
         } else {
             coupons = await Coupon.find({
                 user: userId,
