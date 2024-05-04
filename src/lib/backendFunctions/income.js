@@ -99,7 +99,7 @@ export const couponClosing = async () => {
             const coupons1000 = userCoupons.filter(coupon => coupon.amount == 1000);
             const coupons10000 = userCoupons.filter(coupon => coupon.amount == 10000);
 
-            const directRefs = await User.find({referredBy: user.referralCode}, {name:1});
+            const directRefs = await User.find({referredBy: user.referralCode, status:'Active'}, {name:1});
 
             const couponCount = coupons1000.reduce((acrr, curr) => {
                 if (curr.royalCount >= 30) {
@@ -116,17 +116,21 @@ export const couponClosing = async () => {
             }, 0)
 
             let royality = 0;
-            if(directRefs.length >= 5){
-                royality += couponCount * 1000 * 0.1;
-            }else if (directRefs.length >= 2) {
+            // if(directRefs.length >= 5){
+            //     royality += couponCount * 1000 * 0.1;
+            // }else 
+            
+            if (directRefs.length >= 2) {
                 royality += couponCount * 1000 * 0.01;
             } else {
                 royality += couponCount * 1000 * 0.005;
             }
 
-            if(directRefs.length >= 5){
-                royality += couponCount2nd * 10000 * 0.1;
-            }else if (directRefs.length >= 2) {
+            // if(directRefs.length >= 5){
+            //     royality += couponCount2nd * 10000 * 0.1;
+            // }else 
+            
+            if (directRefs.length >= 2) {
                 royality += couponCount2nd * 10000 * 0.01;
             } else {
                 royality += couponCount2nd * 10000 * 0.005;
