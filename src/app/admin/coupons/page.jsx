@@ -285,6 +285,7 @@ function DataTable({ coupons = [] }) {
                         <TableHead>Upi</TableHead>
                         <TableHead>Quantity</TableHead>
                         <TableHead>Amount</TableHead>
+                        <TableHead>Type</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Created At</TableHead>
                         <TableHead className="text-right">Actions</TableHead>
@@ -341,6 +342,7 @@ function DataTable({ coupons = [] }) {
                                 <TableCell>{coupon.upi}</TableCell>
                                 <TableCell>{coupon.quantity}</TableCell>
                                 <TableCell>{coupon.amount}</TableCell>
+                                <TableCell>{coupon.coupType}</TableCell>
                                 <TableCell>{coupon.status}</TableCell>
                                 <TableCell>{formattedDateTime(coupon.createdAt).date}</TableCell>
                                 <TableCell className="text-right">
