@@ -43,7 +43,7 @@ function Coupons() {
                 {
                     coupons.map(coupon => {
                         return (
-                            <CouponCard key={coupon._id} quantity={coupon.quantity} couponId={coupon._id} amount={coupon.amount} />
+                            <CouponCard key={coupon._id} quantity={coupon.quantity} couponId={coupon._id} amount={coupon.amount} type={coupon?.cType} />
                         )
                     })
                 }
@@ -52,7 +52,7 @@ function Coupons() {
     )
 }
 
-function CouponCard({ amount, couponId, quantity }) {
+function CouponCard({ amount, couponId, quantity, type }) {
     const handleSubmit = (e) => {
         e.preventDefault()
         axios.post('/api/coupons/use', { couponId }).then(res => {
@@ -73,7 +73,7 @@ function CouponCard({ amount, couponId, quantity }) {
                 <h2 className='font-bold'>Richtrek</h2>
             </div>
             <div className='w-full'>
-                <b>Coupon</b>
+                <b>Coupon {type == 'Bounded' && (<span className='text-sm font-medium text-yellow-600 float-right'>Bounded</span>)} </b>
                 <p>₹{amount}</p>
                 <div className='flex items-center justify-between w-full'>
 

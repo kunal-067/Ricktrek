@@ -27,7 +27,7 @@ export const matchingIncome = async (userId, quantity, amount, couponId, refName
                 } else if (amount == 1000) {
                     return 5 * quantity;
                 } else {
-                    return 0; 
+                    return 0;
                 }
             };
 
@@ -59,7 +59,7 @@ export const matchingIncome = async (userId, quantity, amount, couponId, refName
                 }
             };
             const increaseCvBy = cvIncrement(amount, quantity);
-            sponsor.rightCv += increaseCvBy ;
+            sponsor.rightCv += increaseCvBy;
             sponsor.rightsCoupon.push({
                 user: userId,
                 amount,
@@ -99,7 +99,12 @@ export const couponClosing = async () => {
             const coupons1000 = userCoupons.filter(coupon => coupon.amount == 1000);
             const coupons10000 = userCoupons.filter(coupon => coupon.amount == 10000);
 
-            const directRefs = await User.find({referredBy: user.referralCode, status:'Active'}, {name:1});
+            const directRefs = await User.find({
+                referredBy: user.referralCode,
+                status: 'Active'
+            }, {
+                name: 1
+            });
 
             const couponCount = coupons1000.reduce((acrr, curr) => {
                 if (curr.royalCount >= 30) {
@@ -119,7 +124,7 @@ export const couponClosing = async () => {
             // if(directRefs.length >= 5){
             //     royality += couponCount * 1000 * 0.1;
             // }else 
-            
+
             if (directRefs.length >= 2) {
                 royality += couponCount * 1000 * 0.01;
             } else {
@@ -129,7 +134,7 @@ export const couponClosing = async () => {
             // if(directRefs.length >= 5){
             //     royality += couponCount2nd * 10000 * 0.1;
             // }else 
-            
+
             if (directRefs.length >= 2) {
                 royality += couponCount2nd * 10000 * 0.01;
             } else {
@@ -159,63 +164,65 @@ export const couponClosing = async () => {
                 await coupon.save();
             })
 
-            if (user.leftsCoupon.find(coupon => coupon.amount == 10000) && user.rightsCoupon.find(coupon => coupon.amount == 10000)) {
-              if (userCoupons.find(coupon => coupon.amount == 10000)) {
-                    user.balance += 3000;
-                    user.earnings += 3000;
-                    user.history.push({
-                        msg: `You got ₹3000 as Matching income`,
-                        hisType: 'matching',
-                        createdAt: Date.now()
-                    })
-                } else {
-                    user.history.push({
-                        msg: `You missed ₹3000 , a match created in your team`,
-                        hisType: 'matching-fail',
-                        createdAt: Date.now()
-                    })
+            if (userCoupons.some(i => i.cType == 'General')) {
+                if (user.leftsCoupon.find(coupon => coupon.amount == 10000) && user.rightsCoupon.find(coupon => coupon.amount == 10000)) {
+                    if (userCoupons.find(coupon => coupon.amount == 10000)) {
+                        user.balance += 3000;
+                        user.earnings += 3000;
+                        user.history.push({
+                            msg: `You got ₹3000 as Matching income`,
+                            hisType: 'matching',
+                            createdAt: Date.now()
+                        })
+                    } else {
+                        user.history.push({
+                            msg: `You missed ₹3000 , a match created in your team`,
+                            hisType: 'matching-fail',
+                            createdAt: Date.now()
+                        })
+                    }
+                }
+
+                if (user.leftsCoupon.find(coupon => coupon.amount == 1000) && user.rightsCoupon.find(coupon => coupon.amount == 1000)) {
+                    if (userCoupons.find(coupon => coupon.amount == 10000) || userCoupons.find(coupon => coupon.amount == 1000)) {
+                        user.balance += 300;
+                        user.earnings += 300;
+                        user.history.push({
+                            msg: `You got ₹300 as Matching income`,
+                            hisType: 'matching',
+                            createdAt: Date.now()
+                        })
+                    } else {
+                        user.history.push({
+                            msg: `You missed ₹300 , a match created in your team`,
+                            hisType: 'matching-fail',
+                            createdAt: Date.now()
+                        })
+                    }
+                }
+
+                if (user.leftsCoupon.find(coupon => coupon.amount == 300) && user.rightsCoupon.find(coupon => coupon.amount == 300)) {
+                    if (userCoupons.find(coupon => coupon.amount == 1000) || userCoupons.find(coupon => coupon.amount == 300)) {
+                        user.balance += 100;
+                        user.earnings += 100;
+                        user.history.push({
+                            msg: `You got ₹100 as Matching income`,
+                            hisType: 'matching',
+                            createdAt: Date.now()
+                        })
+                    } else {
+                        user.history.push({
+                            msg: `You missed ₹100 , a match created in your team`,
+                            hisType: 'matching-fail',
+                            createdAt: Date.now()
+                        })
+                    }
                 }
             }
 
-            if (user.leftsCoupon.find(coupon => coupon.amount == 1000) && user.rightsCoupon.find(coupon => coupon.amount == 1000)) {
-                if (userCoupons.find(coupon => coupon.amount == 10000) || userCoupons.find(coupon => coupon.amount == 1000)) {
-                    user.balance += 300;
-                    user.earnings += 300;
-                    user.history.push({
-                        msg: `You got ₹300 as Matching income`,
-                        hisType: 'matching',
-                        createdAt: Date.now()
-                    })
-                } else {
-                    user.history.push({
-                        msg: `You missed ₹300 , a match created in your team`,
-                        hisType: 'matching-fail',
-                        createdAt: Date.now()
-                    })
-                }
-            }
-
-            if (user.leftsCoupon.find(coupon => coupon.amount == 300) && user.rightsCoupon.find(coupon => coupon.amount == 300)) {
-                if (userCoupons.find(coupon => coupon.amount == 1000) || userCoupons.find(coupon => coupon.amount == 300)) {
-                    user.balance += 100;
-                    user.earnings += 100;
-                    user.history.push({
-                        msg: `You got ₹100 as Matching income`,
-                        hisType: 'matching',
-                        createdAt: Date.now()
-                    })
-                } else {
-                    user.history.push({
-                        msg: `You missed ₹100 , a match created in your team`,
-                        hisType: 'matching-fail',
-                        createdAt: Date.now()
-                    })
-                }
-            }
-
+            
             user.leftsCoupon = [];
             user.rightsCoupon = [];
-
             await user.save();
         })
 

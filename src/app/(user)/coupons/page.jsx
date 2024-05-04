@@ -31,6 +31,7 @@ function Coupons() {
                 Coupons
             </div>
             <div className='mt-3 mx-1 flex flex-wrap mb-`'>
+            <CouponCard amount={1000} bound={true} />
                 <CouponCard amount={10000} />
                 <CouponCard amount={1000} />
                 <CouponCard amount={300} />
@@ -41,13 +42,13 @@ function Coupons() {
     )
 }
 
-function CouponCard({ amount }) {
+function CouponCard({ amount, bound }) {
     const [quantity, setQuantity] = useState(1);
     const [upi, setUpi] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('/api/coupons', { upi, amount, quantity }).then(res => {
+        axios.post('/api/coupons', { upi, amount, quantity, cType:bound ? 'Bounded' : 'General' }).then(res => {
             toast({
                 title: res.data.msg
             })
@@ -65,7 +66,7 @@ function CouponCard({ amount }) {
                 <h2 className='font-bold'>Richtrek</h2>
             </div>
             <div className='w-full'>
-                <b>Coupon</b>
+                <b>Coupon {bound&&(<span className='text-sm font-medium text-yellow-600 float-right'>Bounded</span>)}</b>
                 <p>₹{amount}</p>
                 <div className='flex items-center justify-end w-full'>
 

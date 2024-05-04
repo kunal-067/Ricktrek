@@ -16,7 +16,11 @@ const couponSchema = new mongoose.Schema({
         enum:['pending', 'approved', 'declined'],
         default:'pending'
     },
-
+    cType:{
+        type:String,
+        enum:['General', 'Bounded'],
+        default:'General'
+    },
     royalcount:{
         type:Number,
         default:0

@@ -72,7 +72,8 @@ export async function POST(req) {
         const {
             upi,
             amount,
-            quantity
+            quantity,
+            cType
         } = await req.json();
         if (amount < 0 || quantity <= 0) {
             return NextResponse.json({
@@ -87,6 +88,7 @@ export async function POST(req) {
             upi,
             amount,
             quantity,
+            cType
         })
 
         await coupon.save();
