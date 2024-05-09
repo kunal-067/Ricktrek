@@ -26,7 +26,7 @@ export async function GET(req) {
         const url = new URL(req.url);
         const query = new URLSearchParams(url.searchParams);
         const iAdminFetch = query.get('admin');
-
+        
         const user = await User.findById(userId);
         if (!user) {
             return NextResponse.json({
@@ -68,7 +68,7 @@ export async function POST(req) {
     try {
         const header = headers();
         const userId = header.get('userId');
-
+       
         const {
             upi,
             amount,

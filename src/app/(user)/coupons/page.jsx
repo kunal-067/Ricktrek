@@ -50,8 +50,12 @@ function CouponCard({ amount, bound }) {
         e.preventDefault()
         axios.post('/api/coupons', { upi, amount, quantity, cType:bound ? 'Bounded' : 'General' }).then(res => {
             toast({
-                title: res.data.msg
+                title: 'Request submitted successfully ! Now pay to proceed.'
             })
+
+            setTimeout(() => {
+                window.location.href = `/payment?amount=${amount*quantity}`
+            }, 100);
         }).catch(err => {
             console.log(err)
             toast({

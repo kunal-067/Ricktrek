@@ -8,8 +8,8 @@ import axios from 'axios'
 import { toast } from '../ui/use-toast'
 
 
-function SignUpCard() {
-    const [referralCode, setReferralCode] = useState('');
+function SignUpCard({refC}) {
+    const [referralCode, setReferralCode] = useState(refC || '');
     const [position, setPosition] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');

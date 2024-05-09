@@ -69,7 +69,7 @@ function OverViewCard({ className, name, referralCode, avatar, registrationDate 
 
                     <div className="flex justify-between">
                         <input disabled={true} className="bg-gray-300 pl-2 rounded-bl-md w-full" type="text" name="registration" placeholder="Referral Link" value={`https://omitrek.com?ref=${referralCode || 'null'}`} />
-                        <span className={`${copied == 2 ? 'bg-green-600' : 'bg-blue-600'} p-2 rounded-r-md`} onClick={() => copyText(`https://omitrek.com?ref=${referralCode || 'null'}`, 2)}>
+                        <span className={`${copied == 2 ? 'bg-green-600' : 'bg-blue-600'} p-2 rounded-r-md`} onClick={() => copyText(`https://omni-mlm.vercel.app/signup?ref=${referralCode || 'null'}`, 2)}>
                             {copied == 2 ? <CheckCheck className="text-[#fff] size-5" /> :
                                 <Copy className="text-[#fff] size-5" />}
                         </span>
