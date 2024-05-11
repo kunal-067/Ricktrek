@@ -3,12 +3,13 @@ import React, { useContext } from 'react'
 import { UserContext } from '../../context/Context'
 
 function Complain() {
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
     return (
         <div className='flex flex-col justify-center items-center w-[100vw] h-[100vh]'>
             <h2 className='text-center font-medium text-[24px] text-[#737373] pb-4 border-b-[2px] w-96 max-w-[95%] mb-8'>Raise Your Issue</h2>
             <form action="https://formsubmit.co/ps1623065@gmail.com" method="post" className='bg-white shadow-lg p-8 w-96 max-w-[95%] rounded-md flex flex-col'>
-                <input name='phone' type='tel' value={user?.phone} className='opacity-0' disabled />
+                <label htmlFor="title" className='opacity-50'>Phone</label>
+                <input name='phone' type='tel' value={user?.phone} placeholder='Enter your phone no.' className='opacity-50 border-[2px] rounded-sm p-2 pl-4 mb-4' />
                 <label htmlFor="title">Title</label>
                 <input name='title' type="text" placeholder='Enter a suitable title' className='border-[2px] rounded-sm p-2 pl-4' />
                 <label htmlFor="message" className='mt-4'>Message</label>
