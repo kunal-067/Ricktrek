@@ -1,5 +1,7 @@
+import { connectDb } from "@/utils/api/dbconnect"
 import mongoose from "mongoose"
 
+await connectDb();
 const userSchema = new mongoose.Schema({
     name: {
         type: String,

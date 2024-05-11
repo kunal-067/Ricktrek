@@ -73,7 +73,7 @@ export async function POST(req){
                 return NextResponse.json({msg:'Sponsor not found! May be wrong referral code'}, {status:404})
             }
 
-            await addTreeData(sponsor, position, user._id)
+            addTreeData(sponsor, position, user._id)
         }
 
         await user.save();

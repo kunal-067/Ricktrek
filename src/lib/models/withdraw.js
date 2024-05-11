@@ -1,5 +1,7 @@
+import { connectDb } from "@/utils/api/dbconnect";
 import mongoose from "mongoose";
 
+await connectDb();
 const withdrawSchema = mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,

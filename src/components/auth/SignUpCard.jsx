@@ -10,7 +10,7 @@ import { toast } from '../ui/use-toast'
 
 function SignUpCard({refC}) {
     const [referralCode, setReferralCode] = useState(refC || '');
-    const [position, setPosition] = useState('');
+    const [position, setPosition] = useState('left');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
@@ -100,13 +100,13 @@ function SignUpCard({refC}) {
                     {referralCode != '' && (
                         <div className="mb-4">
                             <Label>Position</Label>
-                            <RadioGroup defaultValue="option-one" className='flex'>
+                            <RadioGroup defaultValue="left" className='flex'>
                                 <div className="flex items-center space-x-2">
                                     <RadioGroupItem value="left" onClick={() => setPosition('left')} id="option-one" />
                                     <Label htmlFor="option-one" className='text-gray-500'>Left</Label>
                                 </div>
                                 <div className="flex items-center space-x-2">
-                                    <RadioGroupItem onClick={() => setPosition('right')} id="option-two" />
+                                    <RadioGroupItem onClick={() => setPosition('right')} disabled id="option-two" />
                                     <Label htmlFor="option-two" className='text-gray-500'>Right</Label>
                                 </div>
                             </RadioGroup>
