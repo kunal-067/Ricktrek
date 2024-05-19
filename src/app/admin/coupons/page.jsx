@@ -43,6 +43,7 @@ function Coupons() {
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [coupons, setCoupons] = useState([{}]);
+    const [closing, setClosing] = useState(false);
 
     const [couponsToDisplay, setCouponsToDisplay] = useState([]);
     const [pages, setPages] = useState(1);
@@ -120,14 +121,17 @@ function Coupons() {
     }
 
     function sendCoupon() {
+        setClosing(true);
         axios.patch('/api/coupons').then(res => {
             toast({
                 title: res.data.msg
-            })
+            });
+            setClosing(false);
         }).catch(err => {
             toast({
                 title: err.response?.data.msg || err.message
-            })
+            });
+            setClosing(false);
         })
     }
 
@@ -150,7 +154,7 @@ function Coupons() {
                 <Input type="text" placeholder="Enter Name..." className="w-96" onChange={(e) => searchUser(e.target.value)} />
                 <Input type="text" placeholder="Enter Id..." className="mx-5 w-80" onChange={(e) => searchUser('', e.target.value)} />
 
-                <Button className='ml-5 hover:bg-gray-400' onClick={sendCoupon}>Close Coupon</Button>
+                <Button className='ml-5 hover:bg-gray-400' onClick={sendCoupon} disabled={closing} >{closing ? 'Closing...' : 'Close Coupon'}</Button>
 
                 <Select onValueChange={value => applyFilter(value)}>
                     <SelectTrigger className="w-[240px] ml-5">
