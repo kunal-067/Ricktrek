@@ -17,7 +17,7 @@ const words = [
         text: "with",
     },
     {
-        text: "Omitrek",
+        text: "Richtrek",
     },
     {
         text: "MLM Plan",

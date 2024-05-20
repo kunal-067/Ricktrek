@@ -19,9 +19,9 @@ Our unique coupon system offers users discounts on purchases and an opportunity 
 To get started with Richtrek MLM, follow these steps:
 
 1. **Clone the repository**:
-   ```bash
+```bash
    git clone https://github.com/KnalShroff/Ricktrek.git
-   ```
+```
 2. **Install dependencies** 
  ```bash
   npm install
@@ -35,8 +35,8 @@ Your app is ready on [http://localhost:3000](https://localhost:3000/)
 
 
 ## Contact Us
-For any queries and enquery feel free to reach us
+For any queries and enqueries feel free to reach us
 
 - [📧 Email](mailto:kunal.wd067@gmail.com)
 - [🌐 Website](https://www.techbooth.in/)
-- [📞 Phone](tel:+919122874046)
+- [📞 Phone - +91-91228 74046](tel:+919122874046)
